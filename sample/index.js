@@ -2,6 +2,7 @@ import sleep from 'sleep-promise'
 import { from, observe } from 'quel'
 
 import './component'
+import './simple-comp'
 
 
 const testEl$ = document.querySelector('test-el')

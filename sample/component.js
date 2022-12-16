@@ -17,7 +17,6 @@ define('test-el', ({ start, rate }) => {
 
   onAttributeChanged((name, value) => {
     if (name === 'rate') {
-      timers.get().stop()
       timers.set(new Timer(parseInt(value)))
     }
   })
