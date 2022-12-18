@@ -1,26 +1,18 @@
 <img src="logo-dark.svg#gh-dark-mode-only" height="96px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="96px"/>
 
-Minimalistic library for defining [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
+Minimalistic library for defining [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and _hooks_:
 
 ```js
-import { define } from 'minicomp'
+import { define, onConnected } from 'minicomp'
 
-define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
-```
-```html
-<say-hi to="World"></say-hi>
-```
-
-<br>
-
-[**minicomp**](.) provides _hooks_ for tapping into [custom elements' life cycle callbacks](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks):
-
-```js
 define('say-hi', ({ to }) => {
   onConnected(() => console.log('CONNECTED!'))
   return `<div>Hellow <span>${to}</span></div>`
 })
+```
+```html
+<say-hi to="World"></say-hi>
 ```
 
 This enables creating custom hooks, enabling a compositional approach to creating more complicated Web Components:
@@ -178,7 +170,7 @@ If you use hooks outside of a component function, they will simply have no effec
 The hooks are building blocks to enable custom hooks:
 
 ```js
-import { onCleanup } from 'minicom'
+import { onCleanup } from 'minicomp'
 
 export function useObservable(observable) {
   const subscription = observable.subscribe()
