@@ -9,14 +9,11 @@ const testEl$ = document.querySelector('test-el')
 const moveClick = from(document.querySelector('#move'))
 const removeClick = from(document.querySelector('#remove'))
 const rate = from(document.querySelector('input'))
-const debounced = async $ => {
-  const r = $(rate) ?? 200
+
+observe(async $ => {
   await sleep(200)
-
-  return r
-}
-
-observe(async $ => testEl$.setAttribute('rate', $(debounced)))
+  $(rate) && testEl$.setAttribute('rate',  parseInt($(rate)))
+})
 
 observe($ => {
   if($(moveClick)) {

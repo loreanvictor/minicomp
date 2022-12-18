@@ -1,14 +1,16 @@
-export type ConnectedHook = (node: Node) => void
-export type DisconnectedHook = (node: Node) => void
-export type AdoptedHook = (node: Node) => void
-export type AttributeChangedHook = (name: string, value: string, node: Node) => void
-export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeChangedHook
+export type ConnectedHook = (node: HTMLElement) => void
+export type DisconnectedHook = (node: HTMLElement) => void
+export type AdoptedHook = (node: HTMLElement) => void
+export type RenderedHook = (node: HTMLElement) => void
+export type AttributeChangedHook = (name: string, value: string, node: HTMLElement) => void
+export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeChangedHook | RenderedHook
 
 
 type Frame = {
-  onDisconnected?: ConnectedHook
-  onConnected?: DisconnectedHook
+  onDisconnected?: DisconnectedHook
+  onConnected?: ConnectedHook
   onAdopted?: AdoptedHook
+  onRendered?: RenderedHook
   onAttributeChanged?: AttributeChangedHook
 }
 
@@ -38,4 +40,5 @@ function hook<Key extends keyof Frame, HookType extends NonNullable<Frame[Key]>>
 export const onConnected = (fn: ConnectedHook) => hook('onConnected', fn)
 export const onDisconnected = (fn: DisconnectedHook) => hook('onDisconnected', fn)
 export const onAdopted = (fn: AdoptedHook) => hook('onAdopted', fn)
+export const onRendered = (fn: RenderedHook) => hook('onRendered', fn)
 export const onAttributeChanged = (fn: AttributeChangedHook) => hook('onAttributeChanged', fn)

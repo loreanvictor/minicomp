@@ -32,6 +32,8 @@ export function component(fn: FunctionalComponent): ClassBasedComponent {
       } else {
         root.appendChild(node)
       }
+
+      hooks.onRendered && hooks.onRendered(this)
     }
 
     connectedCallback() {
