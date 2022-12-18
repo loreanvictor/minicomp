@@ -1,5 +1,5 @@
-<img src="logo-dark.svg#gh-dark-mode-only" height="64px"/>
-<img src="logo-light.svg#gh-light-mode-only" height="64px"/>
+<img src="logo-dark.svg#gh-dark-mode-only" height="56px"/>
+<img src="logo-light.svg#gh-light-mode-only" height="56px"/>
 
 Minimalistic library for defining [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
 
