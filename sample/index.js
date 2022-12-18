@@ -4,6 +4,7 @@ import { from, observe } from 'quel'
 import './component'
 import './simple-comp'
 
+const simple$ = document.querySelector('say-hi')
 
 const testEl$ = document.querySelector('test-el')
 const moveClick = from(document.querySelector('#move'))
@@ -19,6 +20,8 @@ observe($ => {
   if($(moveClick)) {
     testEl$.remove()
     document.body.appendChild(testEl$)
+
+    simple$.setAttribute('to', 'Jack')
   }
 })
 
