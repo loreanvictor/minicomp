@@ -15,44 +15,6 @@ define('say-hi', ({ to }) => {
 <say-hi to="World"></say-hi>
 ```
 
-This enables creating custom hooks, enabling a compositional approach to creating more complicated Web Components:
-
-```js
-// define a custom hook for creating a timer that is stopped
-// whenever the element is not connected to the DOM.
-
-import { onConnected, onDisconnected } from 'minicomp'
-
-export const useInterval = (ms, callback) => {
-  let interval
-  let counter = 0
-
-  onConnected(() => interval = setInterval(() => callback(++counter), ms))
-  onDisconnected(() => clearInterval(interval))
-}
-```
-```js
-// now use the custom hook:
-
-import { template, use } from 'htmplate'
-import { define } from 'minicomp'
-
-const tmpl$ = template`<div>Elapsed: <span>0</span> seconds</div>`
-
-define('my-timer', () => {
-  const host$ = use(tmpl$)
-  const span$ = host$.querySelector('span')
-  
-  useInterval(1000, c => span$.textContent = c)
-  
-  return host$
-})
-```
-```html
-<my-timer></my-timer>
-```
-👉 [Try it out!](https://codepen.io/lorean_victor/pen/vYroJwP)
-
 <br>
 
 ## Installation
@@ -167,15 +129,40 @@ If you use hooks outside of a component function, they will simply have no effec
 
 ### Custom Hooks
 
-The hooks are building blocks to enable custom hooks:
 
 ```js
-import { onCleanup } from 'minicomp'
+// define a custom hook for creating a timer that is stopped
+// whenever the element is not connected to the DOM.
 
-export function useObservable(observable) {
-  const subscription = observable.subscribe()
-  onCleanup(() => subscription.unsubscribe())
+import { onConnected, onDisconnected } from 'minicomp'
+
+export const useInterval = (ms, callback) => {
+  let interval
+  let counter = 0
+
+  onConnected(() => interval = setInterval(() => callback(++counter), ms))
+  onDisconnected(() => clearInterval(interval))
 }
 ```
+```js
+// now use the custom hook:
 
-<br>
+import { template, use } from 'htmplate'
+import { define } from 'minicomp'
+
+const tmpl$ = template`<div>Elapsed: <span>0</span> seconds</div>`
+
+define('my-timer', () => {
+  const host$ = use(tmpl$)
+  const span$ = host$.querySelector('span')
+  
+  useInterval(1000, c => span$.textContent = c)
+  
+  return host$
+})
+```
+```html
+<my-timer></my-timer>
+```
+👉 [Try it out!](https://codepen.io/lorean_victor/pen/vYroJwP)
+
