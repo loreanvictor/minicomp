@@ -1,6 +1,11 @@
 <img src="logo-dark.svg#gh-dark-mode-only" height="96px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="96px"/>
 
+[![tests](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml/badge.svg)](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml)
+[![version](https://img.shields.io/npm/v/minicomp?logo=npm)](https://www.npmjs.com/package/minicomp)
+![types](https://img.shields.io/npm/types/minicomp)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=size)](https://bundlephobia.com/package/minicomp@latest)
+
 Minimalistic library for defining [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and _hooks_:
 
 ```js
