@@ -1,7 +1,9 @@
-import { acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook } from './hooks'
+import {
+  acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED
+} from './hooks'
 
 
-export type FunctionalComponent = (props: object) => Node | string
+export type FunctionalComponent = (props: any) => Node | string
 export type ClassBasedComponent = { new (): HTMLElement }
 
 
@@ -51,6 +53,11 @@ export function component(fn: FunctionalComponent): ClassBasedComponent {
     override setAttribute(name: string, value: string): void {
       super.setAttribute(name, value)
       this._attributeChanged && this._attributeChanged(name, value, this)
+    }
+
+    override removeAttribute(qualifiedName: string): void {
+      super.removeAttribute(qualifiedName)
+      this._attributeChanged && this._attributeChanged(qualifiedName, ATTRIBUTE_REMOVED, this)
     }
   }
 }

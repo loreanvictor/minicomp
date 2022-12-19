@@ -1,8 +1,10 @@
+export const ATTRIBUTE_REMOVED = Symbol()
+
 export type ConnectedHook = (node: HTMLElement) => void
 export type DisconnectedHook = (node: HTMLElement) => void
 export type AdoptedHook = (node: HTMLElement) => void
 export type RenderedHook = (node: HTMLElement) => void
-export type AttributeChangedHook = (name: string, value: string, node: HTMLElement) => void
+export type AttributeChangedHook = (name: string, value: string | typeof ATTRIBUTE_REMOVED, node: HTMLElement) => void
 export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeChangedHook | RenderedHook
 
 
@@ -29,8 +31,9 @@ function hook<Key extends keyof Frame, HookType extends NonNullable<Frame[Key]>>
   const current = stack[stack.length - 1]
 
   if (current) {
-    current[prop] = current[prop] ? (((...args: Parameters<HookType>) => {
-      (current[prop]! as any)(...args);
+    const currentHook = current[prop]
+    current[prop] = currentHook ? (((...args: Parameters<HookType>) => {
+      (currentHook as any)(...args);
       (fn as any)(...args)
     }) as HookType) : fn
   }

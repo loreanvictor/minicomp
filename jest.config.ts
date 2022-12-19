@@ -6,7 +6,7 @@ export default {
   testEnvironmentOptions: {
     url: 'http://localhost',
   },
-  testMatch: ['**/test/*.test.[jt]s?(x)'],
+  testMatch: ['**/test/**/*.test.[jt]s?(x)'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.test.{ts,tsx}',
