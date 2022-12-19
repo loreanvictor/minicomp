@@ -13,6 +13,7 @@ import { define, onConnected } from 'minicomp'
 
 define('say-hi', ({ to }) => {
   onConnected(() => console.log('CONNECTED!'))
+
   return `<div>Hellow <span>${to}</span></div>`
 })
 ```
