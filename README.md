@@ -48,7 +48,7 @@ define('my-el', () => '<div>Hellow World!</div>')
 <my-el></my-el>
 ```
 
-> ☝️ A component function can return an `HTMLElement` or a string representation of some DOM. You can simply not use a library, or use a combo of [htm](https://github.com/developit/htm) and [vhtml](https://github.com/developit/vhtml) (see [this](https://github.com/developit/htm#other-uses)), or use template elements (e.g. via [htmplate](https://github.com/loreanvictor/htmplate)), etc.
+> ☝️ A component function can return an `HTMLElement` or a string representation of some DOM.
 
 <br>
 
