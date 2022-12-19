@@ -1,5 +1,5 @@
-<img src="logo-dark.svg#gh-dark-mode-only" height="96px"/>
-<img src="logo-light.svg#gh-light-mode-only" height="96px"/>
+<img src="logo-dark.svg#gh-dark-mode-only" height="108px"/>
+<img src="logo-light.svg#gh-light-mode-only" height="108px"/>
 
 [![tests](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml/badge.svg)](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml)
 [![version](https://img.shields.io/npm/v/minicomp?logo=npm)](https://www.npmjs.com/package/minicomp)
@@ -79,6 +79,24 @@ define('my-el', () => {
 ### Provided Hooks
 
 ```ts
+onCleanup(hook: () => void)
+```
+
+Is called after the element is removed from the document and not added back immediately.
+
+<br>
+
+```ts
+onAttribute(
+  name: string,
+  hook: (value: string | typeof ATTRIBUTE_REMOVED | undefined) => void
+)
+```
+Is called with the initial value of the attribute (`undefined` if not passed initially) and whenever the value of the attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
+
+<br>
+
+```ts
 onConnected(hook: (node: HTMLElement) => void)
 ```
 Is called when the element is connected to the DOM. Might get called multiple times (e.g. when the elemnt is moved).
@@ -94,10 +112,16 @@ Is called when the element is disconnected from the DOM. Might get called multip
 <br>
 
 ```ts
-onAttributeChanged(hook: (name: string, value: string, node: HTMLElement) => void)
+onAttributeChanged(
+  hook: (
+    name: string,
+    value: string | typeof ATTRIBUTE_REMOVED,
+    node: HTMLElement
+  ) => void
+)
 ```
 
-Is called when `.setAttribute()` is called on the element, changing value of an attribute.
+Is called when `.setAttribute()` is called on the element, changing value of an attribute. Will pass `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
 
 <br>
 
@@ -117,13 +141,6 @@ Is called after the returned DOM is attached to the element's [shadow root](http
 
 <br>
 
-```ts
-onCleanup(hook: () => void)
-```
-
-Is called after the element is removed from the document and not added back immediately.
-
-<br>
 
 ### Rules for Hooks
 
