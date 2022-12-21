@@ -1,12 +1,12 @@
-<img src="logo-dark.svg#gh-dark-mode-only" height="96px"/>
-<img src="logo-light.svg#gh-light-mode-only" height="96px"/>
+<img src="logo-dark.svg#gh-dark-mode-only" height="108px"/>
+<img src="logo-light.svg#gh-light-mode-only" height="108px"/>
 
 [![tests](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml/badge.svg)](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml)
 [![version](https://img.shields.io/npm/v/minicomp?logo=npm)](https://www.npmjs.com/package/minicomp)
 ![types](https://img.shields.io/npm/types/minicomp)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=size)](https://bundlephobia.com/package/minicomp@latest)
 
-Minimalistic library for defining [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and _hooks_:
+Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
 
 ```js
 import { define, onConnected } from 'minicomp'
@@ -21,9 +21,11 @@ define('say-hi', ({ to }) => {
 <say-hi to="World"></say-hi>
 ```
 
+[**minicomp**](.) is a simple wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements), reducing code boilerplate and providing composability and extensibility of hooks. It does NOT use virtual DOM, does NOT handle reconcilliation, doesn't even care how you create or update the HTML elements used in your components.
+
 <br>
 
-## Installation
+# Installation
 
 On [node](https://nodejs.org/en/):
 ```bash
@@ -36,7 +38,7 @@ import { define } from 'https://esm.sh/minicomp'
 
 <br>
 
-## Usage
+# Usage
 
 Define a custom element:
 
@@ -90,7 +92,25 @@ using({
 <p is="my-el"></p>
 ```
 
-### Provided Hooks
+## Provided Hooks
+
+```ts
+onCleanup(hook: () => void)
+```
+
+Is called after the element is removed from the document and not added back immediately.
+
+<br>
+
+```ts
+onAttribute(
+  name: string,
+  hook: (value: string | typeof ATTRIBUTE_REMOVED | undefined) => void
+)
+```
+Is called with the initial value of the attribute (`undefined` if not passed initially) and whenever the value of the attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
+
+<br>
 
 ```ts
 onConnected(hook: (node: HTMLElement) => void)
@@ -108,10 +128,16 @@ Is called when the element is disconnected from the DOM. Might get called multip
 <br>
 
 ```ts
-onAttributeChanged(hook: (name: string, value: string, node: HTMLElement) => void)
+onAttributeChanged(
+  hook: (
+    name: string,
+    value: string | typeof ATTRIBUTE_REMOVED,
+    node: HTMLElement
+  ) => void
+)
 ```
 
-Is called when `.setAttribute()` is called on the element, changing value of an attribute.
+Is called when `.setAttribute()` is called on the element, changing value of an attribute. Will pass `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
 
 <br>
 
@@ -131,15 +157,8 @@ Is called after the returned DOM is attached to the element's [shadow root](http
 
 <br>
 
-```ts
-onCleanup(hook: () => void)
-```
 
-Is called after the element is removed from the document and not added back immediately.
-
-<br>
-
-### Rules for Hooks
+## Rules for Hooks
 
 Hooks MUST be called synchronously within the component function, before it returns its corresponding DOM. Besides that, there are no additional hooks rules, so use them freely (within a for loop, conditionally, etc.).
 
@@ -147,7 +166,7 @@ If you use hooks outside of a component function, they will simply have no effec
 
 <br>
 
-### Custom Hooks
+## Custom Hooks
 
 
 ```js
@@ -186,3 +205,36 @@ define('my-timer', () => {
 ```
 👉 [Try it out!](https://codepen.io/lorean_victor/pen/vYroJwP)
 
+<br>
+
+# Contribution
+
+You need [node](https://nodejs.org/en/), [NPM](https://www.npmjs.com) to start and [git](https://git-scm.com) to start.
+
+```bash
+# clone the code
+git clone git@github.com:loreanvictor/quel.git
+```
+```bash
+# install stuff
+npm i
+```
+
+Make sure all checks are successful on your PRs. This includes all tests passing, high code coverage, correct typings and abiding all [the linting rules](https://github.com/loreanvictor/quel/blob/main/.eslintrc). The code is typed with [TypeScript](https://www.typescriptlang.org), [Jest](https://jestjs.io) is used for testing and coverage reports, [ESLint](https://eslint.org) and [TypeScript ESLint](https://typescript-eslint.io) are used for linting. Subsequently, IDE integrations for TypeScript and ESLint would make your life much easier (for example, [VSCode](https://code.visualstudio.com) supports TypeScript out of the box and has [this nice ESLint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)), but you could also use the following commands:
+
+```bash
+# run tests
+npm test
+```
+```bash
+# check code coverage
+npm run coverage
+```
+```bash
+# run linter
+npm run lint
+```
+```bash
+# run type checker
+npm run typecheck
+```
