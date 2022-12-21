@@ -22,13 +22,14 @@ describe(onConnected, () => {
     define('oc-2', () => {
       onConnected(() => a.push(1))
       onConnected(() => a.push(2))
+      onConnected(() => a.push(3))
 
       return '<div>Hi!</div>'
     })
 
     const el = document.createElement('oc-2')
     document.body.appendChild(el)
-    expect(a).toEqual([1, 2])
+    expect(a).toEqual([1, 2, 3])
   })
 
   test('is called after reconnection.', () => {

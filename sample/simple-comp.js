@@ -1,4 +1,4 @@
-import { define, onAttributeChanged } from '../src'
+import { define, onAttributeChanged, on } from '../src'
 
 
 define('say-hi', ({ to }) => {
@@ -6,6 +6,8 @@ define('say-hi', ({ to }) => {
     name === 'to' &&
     (self.shadowRoot.querySelector('span').textContent = value)
   )
+
+  on('click', () => console.log('CLICKED!'))
 
   return `<div>Hellow <span>${to}</span></div>`
 })

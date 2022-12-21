@@ -1,7 +1,7 @@
 import {
   define, definable, DefinableCompoennt,
   onConnected, onDisconnected, onAttributeChanged, onAdopted, onRendered,
-  ATTRIBUTE_REMOVED, onAttribute, onCleanup,
+  ATTRIBUTE_REMOVED, onAttribute, onCleanup, on,
   component, FunctionalComponent, ClassBasedComponent,
 } from '../index'
 
@@ -20,6 +20,7 @@ test('stuff are exported properly.', () => {
   expect(ATTRIBUTE_REMOVED).toBeDefined()
   expect(onAttribute).toBeDefined()
   expect(onCleanup).toBeDefined()
+  expect(on).toBeDefined()
 
   expect(component).toBeDefined()
   expect(<FunctionalComponent>{}).toBeDefined()

@@ -8,34 +8,70 @@ export type AttributeChangedHook = (name: string, value: string | typeof ATTRIBU
 export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeChangedHook | RenderedHook
 
 
-type Frame = {
-  onDisconnected?: DisconnectedHook
-  onConnected?: ConnectedHook
-  onAdopted?: AdoptedHook
-  onRendered?: RenderedHook
-  onAttributeChanged?: AttributeChangedHook
+type InternalFrame = {
+  onDisconnected?: DisconnectedHook | DisconnectedHook[]
+  onConnected?: ConnectedHook | ConnectedHook[]
+  onAdopted?: AdoptedHook | AdoptedHook[]
+  onRendered?: RenderedHook | RenderedHook[]
+  onAttributeChanged?: AttributeChangedHook | AttributeChangedHook[]
 }
 
-const stack: Frame[] = []
+export type RegisteredHooks = {
+  onAttributeChanged?: AttributeChangedHook
+  onRendered?: RenderedHook
+  onAdopted?: AdoptedHook
+  onConnected?: ConnectedHook
+  onDisconnected?: DisconnectedHook
+}
 
-export function acceptHooks<T>(fn: () => T): [T, Frame] {
-  const ctx: Frame = {}
+const stack: InternalFrame[] = []
+
+function prepareFrame(frame: InternalFrame): RegisteredHooks {
+  const result: RegisteredHooks = {}
+  for (const key in frame) {
+    const value = frame[key]
+    if (value) {
+      if (Array.isArray(value)) {
+        result[key] = ((...args: any[]) => {
+          for (const fn of value) {
+            fn(...args)
+          }
+        }) as any
+      } else {
+        result[key] = value
+      }
+    }
+  }
+
+  return result
+}
+
+export function acceptHooks<T>(fn: () => T): [T, RegisteredHooks] {
+  const ctx: InternalFrame = {}
   stack.push(ctx)
   const result = fn()
   stack.pop()
 
-  return [result, ctx]
+  return [result, prepareFrame(ctx)]
 }
 
-function hook<Key extends keyof Frame, HookType extends NonNullable<Frame[Key]>>(prop: Key, fn: HookType) {
+function hook<
+  Key extends keyof RegisteredHooks,
+  HookType extends NonNullable<RegisteredHooks[Key]>
+>(prop: Key, fn: HookType) {
   const current = stack[stack.length - 1]
 
   if (current) {
     const currentHook = current[prop]
-    current[prop] = currentHook ? (((...args: Parameters<HookType>) => {
-      (currentHook as any)(...args);
-      (fn as any)(...args)
-    }) as HookType) : fn
+    if (currentHook) {
+      if (Array.isArray(currentHook)) {
+        currentHook.push(fn as any)
+      } else {
+        current[prop] = [currentHook, fn as any]
+      }
+    } else {
+      current[prop] = fn
+    }
   }
 }
 

@@ -113,6 +113,13 @@ Is called with the initial value of the attribute (`undefined` if not passed ini
 <br>
 
 ```ts
+on(name: string, hook: (event: Event) => void)
+```
+Adds an event listener to the custom element (via `.addEventListener()`). For example, `on('click', () => ...)` will add a click listener to the element.
+
+<br>
+
+```ts
 onConnected(hook: (node: HTMLElement) => void)
 ```
 Is called when the element is connected to the DOM. Might get called multiple times (e.g. when the elemnt is moved).
