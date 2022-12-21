@@ -7,8 +7,16 @@ export type FunctionalComponent = (props: any) => Node | string
 export type ClassBasedComponent = { new (): HTMLElement }
 
 
-export function component(fn: FunctionalComponent): ClassBasedComponent {
-  return class extends HTMLElement {
+export type ComponentOptions = {
+  baseClass?: ClassBasedComponent
+}
+
+
+export function component(
+  fn: FunctionalComponent,
+  options?: ComponentOptions
+): ClassBasedComponent {
+  return class extends (options?.baseClass ?? HTMLElement) {
     private _connected?: ConnectedHook
     private _disconnected?: DisconnectedHook
     private _adopted?: AdoptedHook

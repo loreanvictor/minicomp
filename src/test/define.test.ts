@@ -1,4 +1,4 @@
-import { define, definable } from '../define'
+import { using, define, definable } from '../define'
 
 
 describe(define, () => {
@@ -30,6 +30,17 @@ describe(define, () => {
       return div
     })
     const el = document.createElement('def-4')
+    expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('defines elements with other bases.', () => {
+    using({
+      baseClass: HTMLParagraphElement,
+      extends: 'p'
+    }).define('def-5', () => '<div>Hellow World!</div>')
+
+    const el = document.createElement('p', { is: 'def-5' })
+    expect(el).toBeInstanceOf(HTMLParagraphElement)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 })

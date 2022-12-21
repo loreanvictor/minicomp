@@ -49,7 +49,7 @@ define('my-el', () => '<div>Hellow World!</div>')
 <my-el></my-el>
 ```
 
-> ☝️ A component function can return an `HTMLElement` or a string representation of some DOM.
+> ☝️ A component function can return a `Node` or a string representation of some DOM.
 
 <br>
 
@@ -75,6 +75,20 @@ define('my-el', () => {
 ```
 
 <br>
+
+Use `using()` to define a component that extends another built-in element:
+
+```js
+import { using } from 'minicomp'
+
+using({
+  baseClass: HTMLParagraphElement,
+  extends: 'p',
+}).define('my-el', () => {/*...*/})
+```
+```html
+<p is="my-el"></p>
+```
 
 ### Provided Hooks
 
