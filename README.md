@@ -25,6 +25,17 @@ define('say-hi', ({ to }) => {
 
 <br>
 
+# Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Provided Hooks](#provided-hooks)
+  - [Rules for Hooks](#rules-for-hooks)
+  - [Custom Hooks](#custom-hooks)
+- [Contribution](#contribution)
+
+<br>
+
 # Installation
 
 On [node](https://nodejs.org/en/):
