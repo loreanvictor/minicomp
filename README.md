@@ -215,6 +215,8 @@ currentNode(): HTMLElement | undefined
 Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
 to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
 
+<br>
+
 ## Rules for Hooks
 
 Hooks MUST be called synchronously within the component function, before it returns its corresponding DOM. Besides that, there are no additional hooks rules, so use them freely (within a for loop, conditionally, etc.).
