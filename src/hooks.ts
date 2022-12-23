@@ -9,6 +9,7 @@ export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeCha
 
 
 type InternalFrame = {
+  currentNode?: HTMLElement
   onDisconnected?: DisconnectedHook | DisconnectedHook[]
   onConnected?: ConnectedHook | ConnectedHook[]
   onAdopted?: AdoptedHook | AdoptedHook[]
@@ -46,8 +47,8 @@ function prepareFrame(frame: InternalFrame): RegisteredHooks {
   return result
 }
 
-export function acceptHooks<T>(fn: () => T): [T, RegisteredHooks] {
-  const ctx: InternalFrame = {}
+export function acceptHooks<T>(fn: () => T, currentNode?: HTMLElement): [T, RegisteredHooks] {
+  const ctx: InternalFrame = { currentNode }
   stack.push(ctx)
   const result = fn()
   stack.pop()
@@ -75,6 +76,8 @@ function hook<
   }
 }
 
+
+export const currentNode = () => stack[stack.length - 1]?.currentNode
 
 export const onConnected = (fn: ConnectedHook) => hook('onConnected', fn)
 export const onDisconnected = (fn: DisconnectedHook) => hook('onDisconnected', fn)

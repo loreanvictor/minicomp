@@ -175,6 +175,12 @@ Is called after the returned DOM is attached to the element's [shadow root](http
 
 <br>
 
+```ts
+currentNode(): HTMLElement | undefined
+```
+
+Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
+to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
 
 ## Rules for Hooks
 

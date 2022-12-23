@@ -30,7 +30,7 @@ export function component(
         props[attr.name] = attr.value
       }
 
-      const [node, hooks] = acceptHooks(() => fn(props))
+      const [node, hooks] = acceptHooks(() => fn(props), this)
       this._connected = hooks.onConnected
       this._disconnected = hooks.onDisconnected
       this._adopted = hooks.onAdopted

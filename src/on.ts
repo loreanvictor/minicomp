@@ -1,4 +1,4 @@
-import { onRendered } from './hooks'
+import { currentNode } from './hooks'
 
 
 export function on<EventName extends keyof HTMLElementEventMap>(
@@ -7,7 +7,5 @@ export function on<EventName extends keyof HTMLElementEventMap>(
 )
 export function on(event: string, fn: (_: Event) => void)
 export function on(event: string, fn: (_: Event) => void) {
-  onRendered((node) => {
-    node.addEventListener(event, fn)
-  })
+  currentNode()?.addEventListener(event, fn)
 }
