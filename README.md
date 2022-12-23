@@ -144,6 +144,8 @@ onCleanup(hook: () => void)
 
 Is called after the element is removed from the document and not added back immediately.
 
+<br>
+
 ### onAttribute
 
 ```ts
@@ -153,6 +155,8 @@ onAttribute(
 )
 ```
 Is called with the initial value of specified attribute (`undefined` if not passed initially) and whenever the value of specified attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when specified attribute is removed (via `.removeAttribute()`).
+
+<br>
 
 ### onProperty
 
@@ -165,12 +169,16 @@ onProperty<T>(name: string, hook: (value: T) => void)
 
 Is called when specified property is set using `.setProperty()` method.
 
+<br>
+
 ### on
 
 ```ts
 on(name: string, hook: (event: Event) => void)
 ```
 Adds an event listener to the custom element (via `.addEventListener()`). For example, `on('click', () => ...)` will add a click listener to the element.
+
+<br>
 
 ### onConnected
 
@@ -179,6 +187,8 @@ onConnected(hook: (node: HTMLElement) => void)
 ```
 Is called when the element is connected to the DOM. Might get called multiple times (e.g. when the elemnt is moved).
 
+<br>
+
 ### onDisconnected
 
 ```ts
@@ -186,6 +196,8 @@ onDisconnected(hook: (node: HTMLElement) => void)
 ```
 
 Is called when the element is disconnected from the DOM. Might get called multiple times (e.g. when the element is moved).
+
+<br>
 
 ### onAttributeChanged
 
@@ -201,6 +213,8 @@ onAttributeChanged(
 
 Is called when `.setAttribute()` is called on the element, changing value of an attribute. Will pass `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
 
+<br>
+
 ### onPropertyChanged
 
 ```ts
@@ -209,6 +223,8 @@ onPropertyChanged(hook: (name: string, value: any, node: HTMLElement) => void)
 
 Is called when `.setProperty()` method of the element is called.
 
+<br>
+
 ### onRendered
 
 ```ts
@@ -216,6 +232,8 @@ onRendered(hook: (node: HTMLElement) => void)
 ```
 
 Is called after the returned DOM is attached to the element's [shadow root](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+<br>
 
 ### currentNode
 
