@@ -6,8 +6,10 @@ import { ATTRIBUTE_REMOVED } from '../../hooks'
 describe(onAttribute, () => {
   test('is called when the attribute is changed.', () => {
     const cb = jest.fn()
+    const cb2 = jest.fn()
     define('oaa-1', () => {
       onAttribute('foo', cb)
+      onAttribute('foo2', cb2)
 
       return '<div>Hi!</div>'
     })
@@ -15,7 +17,12 @@ describe(onAttribute, () => {
     const el = document.createElement('oaa-1')
     document.body.appendChild(el)
     el.setAttribute('foo', 'bar')
+
+    expect(cb).toHaveBeenCalledTimes(2)
     expect(cb).toHaveBeenCalledWith('bar')
+
+    expect(cb2).toHaveBeenCalledTimes(1)
+    expect(cb2).toHaveBeenCalledWith(undefined)
   })
 
   test('is called when the attribute is removed.', () => {

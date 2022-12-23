@@ -1,10 +1,11 @@
 import {
-  acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED
+  acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED, PropertyChangedHook
 } from './hooks'
 
 
 export type FunctionalComponent = (props: any) => Node | string
-export type ClassBasedComponent = { new (): HTMLElement }
+export type ClassBasedComponent = typeof HTMLElement
+export type PropableElement = HTMLElement & { setProperty(name: string, value: unknown): void }
 
 
 export type ComponentOptions = {
@@ -21,6 +22,7 @@ export function component(
     private _disconnected?: DisconnectedHook
     private _adopted?: AdoptedHook
     private _attributeChanged?: AttributeChangedHook
+    private _propertyChanged?: PropertyChangedHook
 
     constructor() {
       super()
@@ -35,6 +37,7 @@ export function component(
       this._disconnected = hooks.onDisconnected
       this._adopted = hooks.onAdopted
       this._attributeChanged = hooks.onAttributeChanged
+      this._propertyChanged = hooks.onPropertyChanged
 
       const root = this.attachShadow({ mode: 'open' })
       if (typeof node === 'string') {
@@ -66,6 +69,11 @@ export function component(
     override removeAttribute(qualifiedName: string): void {
       super.removeAttribute(qualifiedName)
       this._attributeChanged && this._attributeChanged(qualifiedName, ATTRIBUTE_REMOVED, this)
+    }
+
+    setProperty(name: string, value: unknown) {
+      super[name] = value
+      this._propertyChanged && this._propertyChanged(name, value, this)
     }
   }
 }

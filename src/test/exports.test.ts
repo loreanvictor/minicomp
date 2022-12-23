@@ -1,7 +1,8 @@
 import {
-  define, definable, DefinableCompoennt,
+  define, definable, DefinableCompoennt, PropableElement,
   onConnected, onDisconnected, onAttributeChanged, onAdopted, onRendered,
-  ATTRIBUTE_REMOVED, onAttribute, onCleanup, on,
+  onPropertyChanged, currentNode,
+  ATTRIBUTE_REMOVED, onAttribute, onProperty, onCleanup, on,
   component, FunctionalComponent, ClassBasedComponent,
 } from '../index'
 
@@ -16,13 +17,17 @@ test('stuff are exported properly.', () => {
   expect(onAttributeChanged).toBeDefined()
   expect(onAdopted).toBeDefined()
   expect(onRendered).toBeDefined()
+  expect(onPropertyChanged).toBeDefined()
+  expect(currentNode).toBeDefined()
 
   expect(ATTRIBUTE_REMOVED).toBeDefined()
   expect(onAttribute).toBeDefined()
+  expect(onProperty).toBeDefined()
   expect(onCleanup).toBeDefined()
   expect(on).toBeDefined()
 
   expect(component).toBeDefined()
   expect(<FunctionalComponent>{}).toBeDefined()
   expect(<ClassBasedComponent>{}).toBeDefined()
+  expect(<PropableElement>{}).toBeDefined()
 })

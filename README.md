@@ -103,6 +103,30 @@ using({
 <p is="my-el"></p>
 ```
 
+<br>
+
+Use `.setProperty()` method of defined elements to set their properties:
+```js
+define('my-el', () => {/*...*/})
+
+const el = document.createElement('my-el')
+el.setProperty('myProp', { whatever: 'you want' })
+```
+
+If you directly set properties (i.e. `el.myProp = ...` or `el['myProp'] = ...`), then the proper
+hooks won't be called.
+
+> In [TypeScript](https://www.typescriptlang.org), you can cast the element to `PropableElement` to get proper type checking
+> for `.setProperty()` method:
+> ```ts
+> import { PropableElement } from 'minicomp'
+>
+> const el = document.createElement('my-el') as PropableElement
+> el.setProperty('myProp', { whatever: 'you want' })
+> ```
+
+<br>
+
 ## Provided Hooks
 
 ```ts
@@ -119,9 +143,18 @@ onAttribute(
   hook: (value: string | typeof ATTRIBUTE_REMOVED | undefined) => void
 )
 ```
-Is called with the initial value of the attribute (`undefined` if not passed initially) and whenever the value of the attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when the attribute is removed (via `.removeAttribute()`).
+Is called with the initial value of specified attribute (`undefined` if not passed initially) and whenever the value of specified attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when specified attribute is removed (via `.removeAttribute()`).
 
 <br>
+
+```ts
+onProperty<T>(name: string, hook: (value: T) => void)
+```
+
+Is called when specified property is set using `.setProperty()` method.
+
+<br>
+
 
 ```ts
 on(name: string, hook: (event: Event) => void)
@@ -160,10 +193,10 @@ Is called when `.setAttribute()` is called on the element, changing value of an 
 <br>
 
 ```ts
-onAdopted(hook: (node: HTMLElement) => void)
+onPropertyChanged(hook: (name: string, value: any, node: HTMLElement) => void)
 ```
 
-_Invoked each time the custom element is moved to a new document._ (??)
+Is called when `.setProperty()` method of the element is called.
 
 <br>
 

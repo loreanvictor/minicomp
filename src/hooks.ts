@@ -5,7 +5,14 @@ export type DisconnectedHook = (node: HTMLElement) => void
 export type AdoptedHook = (node: HTMLElement) => void
 export type RenderedHook = (node: HTMLElement) => void
 export type AttributeChangedHook = (name: string, value: string | typeof ATTRIBUTE_REMOVED, node: HTMLElement) => void
-export type Hook = ConnectedHook | DisconnectedHook | AdoptedHook | AttributeChangedHook | RenderedHook
+export type PropertyChangedHook = (name: string, value: unknown, node: HTMLElement) => void
+export type Hook =
+  | ConnectedHook
+  | DisconnectedHook
+  | AdoptedHook
+  | AttributeChangedHook
+  | PropertyChangedHook
+  | RenderedHook
 
 
 type InternalFrame = {
@@ -15,9 +22,11 @@ type InternalFrame = {
   onAdopted?: AdoptedHook | AdoptedHook[]
   onRendered?: RenderedHook | RenderedHook[]
   onAttributeChanged?: AttributeChangedHook | AttributeChangedHook[]
+  onPropertyChanged?: PropertyChangedHook | PropertyChangedHook[]
 }
 
 export type RegisteredHooks = {
+  onPropertyChanged?: PropertyChangedHook
   onAttributeChanged?: AttributeChangedHook
   onRendered?: RenderedHook
   onAdopted?: AdoptedHook
@@ -84,3 +93,4 @@ export const onDisconnected = (fn: DisconnectedHook) => hook('onDisconnected', f
 export const onAdopted = (fn: AdoptedHook) => hook('onAdopted', fn)
 export const onRendered = (fn: RenderedHook) => hook('onRendered', fn)
 export const onAttributeChanged = (fn: AttributeChangedHook) => hook('onAttributeChanged', fn)
+export const onPropertyChanged = (fn: PropertyChangedHook) => hook('onPropertyChanged', fn)
