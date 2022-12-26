@@ -301,7 +301,7 @@ You need [node](https://nodejs.org/en/), [NPM](https://www.npmjs.com) to start a
 
 ```bash
 # clone the code
-git clone git@github.com:loreanvictor/quel.git
+git clone git@github.com:loreanvictor/minicomp.git
 ```
 ```bash
 # install stuff
