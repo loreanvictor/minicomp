@@ -295,7 +295,12 @@ define('my-timer', () => {
 ```html
 <my-timer></my-timer>
 ```
-👉 [Try it out!](https://codepen.io/lorean_victor/pen/vYroJwP)
+
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/vYroJwP)
+
+</div>
 
 <br>
 
