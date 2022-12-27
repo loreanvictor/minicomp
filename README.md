@@ -1,10 +1,14 @@
+<div align="right">
+
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=&style=flat-square)](https://bundlephobia.com/package/minicomp@latest)
+![npm type definitions](https://img.shields.io/npm/types/minicomp?color=black&label=%20&style=flat-square)
+[![version](https://img.shields.io/npm/v/minicomp?label=&color=black&style=flat-square)](https://www.npmjs.com/package/minicomp)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/minicomp/coverage.yml?label=%20&style=flat-square)](https://github.com/loreanvictor/minicomp/actions/workflows/coverage.yml)
+
+</div>
+
 <img src="logo-dark.svg#gh-dark-mode-only" height="108px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="108px"/>
-
-[![tests](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml/badge.svg)](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml)
-[![version](https://img.shields.io/npm/v/minicomp?logo=npm)](https://www.npmjs.com/package/minicomp)
-![types](https://img.shields.io/npm/types/minicomp)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=size)](https://bundlephobia.com/package/minicomp@latest)
 
 Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
 
