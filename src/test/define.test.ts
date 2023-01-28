@@ -1,3 +1,6 @@
+jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
+
+import { template } from 'rehtm'
 import { using, define, definable } from '../define'
 
 
@@ -41,6 +44,13 @@ describe(define, () => {
 
     const el = document.createElement('p', { is: 'def-5' })
     expect(el).toBeInstanceOf(HTMLParagraphElement)
+    expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('works well with ssr templates', () => {
+    define('def-6', () => template`<div>Hellow World!</div>`)
+
+    const el = document.createElement('def-6')
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 })

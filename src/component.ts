@@ -1,9 +1,10 @@
 import {
   acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED, PropertyChangedHook
 } from './hooks'
+import { SSRTemplate, isSSRTemplate } from './ssr'
 
 
-export type FunctionalComponent = (props: any) => Node | string
+export type FunctionalComponent = (props: any) => Node | SSRTemplate | string
 export type ClassBasedComponent = typeof HTMLElement
 export type PropableElement = HTMLElement & { setProperty(name: string, value: unknown): void }
 
@@ -39,11 +40,19 @@ export function component(
       this._attributeChanged = hooks.onAttributeChanged
       this._propertyChanged = hooks.onPropertyChanged
 
-      const root = this.attachShadow({ mode: 'open' })
-      if (typeof node === 'string') {
-        root.innerHTML = node
+      // TODO: test this using happy-dom (https://www.npmjs.com/package/happy-dom)
+      /* istanbul ignore if */
+      if (isSSRTemplate(node) && this.shadowRoot) {
+        node.hydrateRoot(this.shadowRoot)
       } else {
-        root.appendChild(node)
+        const root = this.attachShadow({ mode: 'open' })
+        if (typeof node === 'string') {
+          root.innerHTML = node
+        } else if (isSSRTemplate(node)) {
+          root.appendChild(node.create())
+        } else {
+          root.appendChild(node)
+        }
       }
 
       hooks.onRendered && hooks.onRendered(this)
