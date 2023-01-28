@@ -335,7 +335,7 @@ define('a-button', () => {
  
 <div align="right">
 
-[**▷ TRY IT**](https://codepen.io/loreaTn_victor/pen/vYroJwP)
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/YzjYdJR)
 
 </div>
 
