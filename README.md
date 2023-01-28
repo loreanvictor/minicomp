@@ -1,10 +1,14 @@
+<div align="right">
+
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=&style=flat-square)](https://bundlephobia.com/package/minicomp@latest)
+![npm type definitions](https://img.shields.io/npm/types/minicomp?color=black&label=%20&style=flat-square)
+[![version](https://img.shields.io/npm/v/minicomp?label=&color=black&style=flat-square)](https://www.npmjs.com/package/minicomp)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/minicomp/coverage.yml?label=%20&style=flat-square)](https://github.com/loreanvictor/minicomp/actions/workflows/coverage.yml)
+
+</div>
+
 <img src="logo-dark.svg#gh-dark-mode-only" height="108px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="108px"/>
-
-[![tests](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml/badge.svg)](https://github.com/loreanvictor/minicomp/actions/workflows/test.yml)
-[![version](https://img.shields.io/npm/v/minicomp?logo=npm)](https://www.npmjs.com/package/minicomp)
-![types](https://img.shields.io/npm/types/minicomp)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=size)](https://bundlephobia.com/package/minicomp@latest)
 
 Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
 
@@ -30,6 +34,16 @@ define('say-hi', ({ to }) => {
 - [Installation](#installation)
 - [Usage](#usage)
   - [Provided Hooks](#provided-hooks)
+    - [onCleanup](#oncleanup)
+    - [onAttribute](#onattribute)
+    - [onProperty](#onproperty)
+    - [on](#on)
+    - [onConnected](#onconnected)
+    - [onDisconnected](#ondisconnected)
+    - [onAttributeChanged](#onattributechanged)
+    - [onPropertyChanged](#onpropertychanged)
+    - [onRendered](#onrendered)
+    - [currentNode](#currentnode)
   - [Rules for Hooks](#rules-for-hooks)
   - [Custom Hooks](#custom-hooks)
 - [Contribution](#contribution)
@@ -51,7 +65,7 @@ import { define } from 'https://esm.sh/minicomp'
 
 # Usage
 
-Define a custom element:
+👉 Define a custom element:
 
 ```js
 import { define } from 'minicomp'
@@ -66,7 +80,7 @@ define('my-el', () => '<div>Hellow World!</div>')
 
 <br>
 
-Attributes are passed as a parameter:
+👉 Attributes are passed as a parameter:
 
 ```js
 define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
@@ -74,7 +88,7 @@ define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
 
 <br>
 
-Use hooks to tap into [custom elements' life cycle callbacks](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks): 
+👉 Use hooks to tap into [custom elements' life cycle callbacks](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks): 
 
 ```js
 import { define, onConnected, onDisconnected } from 'minicomp'
@@ -89,7 +103,7 @@ define('my-el', () => {
 
 <br>
 
-Use `using()` to define a component that extends another built-in element:
+👉 Use `using()` to define a component that extends another built-in element:
 
 ```js
 import { using } from 'minicomp'
@@ -105,7 +119,7 @@ using({
 
 <br>
 
-Use `.setProperty()` method of defined elements to set their properties:
+👉 Use `.setProperty()` method of defined elements to set their properties:
 ```js
 define('my-el', () => {/*...*/})
 
@@ -113,11 +127,9 @@ const el = document.createElement('my-el')
 el.setProperty('myProp', { whatever: 'you want' })
 ```
 
-If you directly set properties (i.e. `el.myProp = ...` or `el['myProp'] = ...`), then the proper
-hooks won't be called.
+> ⚠️ Don't set properties manually, as then the proper hooks won't be invoked.
 
-> In [TypeScript](https://www.typescriptlang.org), you can cast the element to `PropableElement` to get proper type checking
-> for `.setProperty()` method:
+> In [TypeScript](https://www.typescriptlang.org), you can cast to `PropableElement` for proper type checking:
 > ```ts
 > import { PropableElement } from 'minicomp'
 >
@@ -129,6 +141,7 @@ hooks won't be called.
 
 ## Provided Hooks
 
+### onCleanup
 ```ts
 onCleanup(hook: () => void)
 ```
@@ -136,6 +149,8 @@ onCleanup(hook: () => void)
 Is called after the element is removed from the document and not added back immediately.
 
 <br>
+
+### onAttribute
 
 ```ts
 onAttribute(
@@ -147,6 +162,11 @@ Is called with the initial value of specified attribute (`undefined` if not pass
 
 <br>
 
+### onProperty
+
+```ts
+onProperty(name: string, hook: (value: unknown) => void)
+```
 ```ts
 onProperty<T>(name: string, hook: (value: T) => void)
 ```
@@ -155,6 +175,7 @@ Is called when specified property is set using `.setProperty()` method.
 
 <br>
 
+### on
 
 ```ts
 on(name: string, hook: (event: Event) => void)
@@ -163,12 +184,16 @@ Adds an event listener to the custom element (via `.addEventListener()`). For ex
 
 <br>
 
+### onConnected
+
 ```ts
 onConnected(hook: (node: HTMLElement) => void)
 ```
 Is called when the element is connected to the DOM. Might get called multiple times (e.g. when the elemnt is moved).
 
 <br>
+
+### onDisconnected
 
 ```ts
 onDisconnected(hook: (node: HTMLElement) => void)
@@ -177,6 +202,8 @@ onDisconnected(hook: (node: HTMLElement) => void)
 Is called when the element is disconnected from the DOM. Might get called multiple times (e.g. when the element is moved).
 
 <br>
+
+### onAttributeChanged
 
 ```ts
 onAttributeChanged(
@@ -192,6 +219,8 @@ Is called when `.setAttribute()` is called on the element, changing value of an 
 
 <br>
 
+### onPropertyChanged
+
 ```ts
 onPropertyChanged(hook: (name: string, value: any, node: HTMLElement) => void)
 ```
@@ -199,6 +228,8 @@ onPropertyChanged(hook: (name: string, value: any, node: HTMLElement) => void)
 Is called when `.setProperty()` method of the element is called.
 
 <br>
+
+### onRendered
 
 ```ts
 onRendered(hook: (node: HTMLElement) => void)
@@ -208,12 +239,16 @@ Is called after the returned DOM is attached to the element's [shadow root](http
 
 <br>
 
+### currentNode
+
 ```ts
 currentNode(): HTMLElement | undefined
 ```
 
 Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
 to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
+
+<br>
 
 ## Rules for Hooks
 
@@ -260,7 +295,12 @@ define('my-timer', () => {
 ```html
 <my-timer></my-timer>
 ```
-👉 [Try it out!](https://codepen.io/lorean_victor/pen/vYroJwP)
+
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/vYroJwP)
+
+</div>
 
 <br>
 
@@ -270,7 +310,7 @@ You need [node](https://nodejs.org/en/), [NPM](https://www.npmjs.com) to start a
 
 ```bash
 # clone the code
-git clone git@github.com:loreanvictor/quel.git
+git clone git@github.com:loreanvictor/minicomp.git
 ```
 ```bash
 # install stuff
