@@ -25,7 +25,13 @@ define('say-hi', ({ to }) => {
 <say-hi to="World"></say-hi>
 ```
 
-[**minicomp**](.) is a simple wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements), reducing code boilerplate and providing composability and extensibility of hooks. It does NOT use virtual DOM, does NOT handle reconcilliation, doesn't even care how you create or update the HTML elements used in your components.
+<br>
+
+- 🌱&emsp;Tiny wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
+- ☕&emsp;[Minimalistic components](#usage)
+- ⚡&emsp;[Composable hooks](#custom-hooks)
+- 🧩&emsp;Interoperable: create and update your DOM however you want
+- 🧬&emsp;[SSR support](#server-side-rendering) with isomorphic components (_experimental_)
 
 <br>
 
@@ -46,6 +52,7 @@ define('say-hi', ({ to }) => {
     - [currentNode](#currentnode)
   - [Rules for Hooks](#rules-for-hooks)
   - [Custom Hooks](#custom-hooks)
+  - [Server Side Rendering](#server-side-rendering)
 - [Contribution](#contribution)
 
 <br>
@@ -298,9 +305,69 @@ define('my-timer', () => {
 
 <div align="right">
 
-[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/vYroJwP)
+[**▷ TRY IT**](https://codepen.io/loreaTn_victor/pen/vYroJwP)
 
 </div>
+
+<br>
+
+## Server Side Rendering
+
+[**minicomp**](.) provides support for SSR and isomorphic components (hydrating pre-rendered content in general) via [declarative shadow DOM](https://github.com/mfreed7/declarative-shadow-dom/blob/master/README.md). On [browsers supporting the feature](https://caniuse.com/?search=declarative%20shadow%20dom), server rendered content will be rehydrated. On browsers that don't, it will fallback to client side rendering. You would also need a serializer supporting declarative shadow DOM, such as [Puppeteer](https://developer.chrome.com/docs/puppeteer/ssr/) or [Happy DOM](https://www.npmjs.com/package/happy-dom).
+
+To enable SSR support on your component, return an `SSRTemplate` object instead of a string or a DOM element. Use libraries such as [**rehtm**](https://github.com/loreanvictor/rehtm#hydration) to easily create SSR templates:
+
+```js
+import { define } from 'minicomp'
+import { ref, template } from 'rehtm'
+
+define('a-button', () => {
+  const span = ref()
+  let count = 0
+  
+  return template`
+    <button onclick=${() => span.current.textContent = ++count}>
+      Client <span ref=${span} role="status">0</span>
+    </button>
+  `
+})
+```
+ 
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/YzjYdJR)
+
+</div>
+
+<br>
+
+You can also manually create SSR templates:
+
+```js
+define('my-comp', () => {
+  const clicked = () => console.log('CLICKED!')
+   
+  return {
+   
+    // first time render,
+    // lets make the DOM and hydrate it.
+    //
+    create: () => {
+      const btn = document.createElement('button')
+      btn.addEventListener('click', clicked)
+       
+      return btn
+    },
+     
+    // pre-rendered content, lets just
+    // rehydrate it:
+    //
+    hydrateRoot: root => {
+      root.firstChild.addEventListener('click', clicked)
+    }
+  }
+})
+```
 
 <br>
 
