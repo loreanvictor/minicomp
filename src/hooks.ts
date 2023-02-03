@@ -88,6 +88,7 @@ function hook<
 
 export const currentNode = () => stack[stack.length - 1]?.currentNode
 
+export const ownerDocument = () => currentNode()?.ownerDocument
 export const onConnected = (fn: ConnectedHook) => hook('onConnected', fn)
 export const onDisconnected = (fn: DisconnectedHook) => hook('onDisconnected', fn)
 export const onAdopted = (fn: AdoptedHook) => hook('onAdopted', fn)
