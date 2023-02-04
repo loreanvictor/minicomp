@@ -37,6 +37,7 @@ define('say-hi', ({ to }) => {
 
 # Contents
 
+- [Contents](#contents)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Provided Hooks](#provided-hooks)
@@ -50,9 +51,11 @@ define('say-hi', ({ to }) => {
     - [onPropertyChanged](#onpropertychanged)
     - [onRendered](#onrendered)
     - [currentNode](#currentnode)
+    - [ownerDocument](#ownerdocument)
   - [Rules for Hooks](#rules-for-hooks)
   - [Custom Hooks](#custom-hooks)
   - [Server Side Rendering](#server-side-rendering)
+    - [Global Window Object](#global-window-object)
 - [Contribution](#contribution)
 
 <br>
@@ -255,6 +258,14 @@ currentNode(): HTMLElement | undefined
 Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
 to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
 
+### ownerDocument
+
+```ts
+ownerDocument(): Document
+```
+
+Returns the document that the element is in. Useful for components (and hooks) that want to be operable in environments where there is no global document object (e.g. during SSR).
+
 <br>
 
 ## Rules for Hooks
@@ -366,6 +377,47 @@ define('my-comp', () => {
       root.firstChild.addEventListener('click', clicked)
     }
   }
+})
+```
+
+<br>
+
+### Global Window Object
+
+In some environments (for example, during server-side rendering), a global `window` object might not be present. Use `window` option of `using()` helper to create a component for a specific window instance:
+
+```js
+import { using, define } from 'minicomp'
+
+using({ window: myWindow }).define('my-comp', () => {
+  // ...
+})
+```
+
+Or
+
+```js
+import { using, component } from 'minicomp'
+
+const myComp = using({ window: myWindow }).component(() => {
+  // ...
+})
+
+myWindow.customElements.define('my-comp', myComp)
+```
+
+<br>
+
+If you need to use the document object in these components, use `ownerDocument()` helper:
+
+```js
+import { using, define, ownerDocument } from 'minicomp'
+
+using({ window: myWindow }).define('my-comp', () => {
+  const doc = ownerDocument()
+  const btn = doc.createElement('button')
+
+  // ...
 })
 ```
 

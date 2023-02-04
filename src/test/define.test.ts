@@ -1,5 +1,10 @@
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
+import { TextEncoder, TextDecoder } from 'util'
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder as any
+
+import { JSDOM } from 'jsdom'
 import { template } from 'rehtm'
 import { using, define, definable } from '../define'
 
@@ -52,5 +57,28 @@ describe(define, () => {
 
     const el = document.createElement('def-6')
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('can define elements on other pages.', () => {
+    const window = new JSDOM().window as unknown as  (Window & typeof globalThis)
+    using({ window }).define('def-7', () => '<div>Hellow World!</div>')
+
+    const el1 = document.createElement('def-7')
+    expect(el1.shadowRoot).toBeFalsy()
+
+    const el2 = window.document.createElement('def-7')
+    expect(el2.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('can define custom elements on other pages using `component()`.', () => {
+    const window = new JSDOM().window as unknown as  (Window & typeof globalThis)
+    const comp = using({ window }).component(() => '<div>Hellow World!</div>')
+    window.customElements.define('def-8', comp)
+
+    const el1 = document.createElement('def-8')
+    expect(el1.shadowRoot).toBeFalsy()
+
+    const el2 = window.document.createElement('def-8')
+    expect(el2.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 })

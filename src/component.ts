@@ -10,6 +10,7 @@ export type PropableElement = HTMLElement & { setProperty(name: string, value: u
 
 
 export type ComponentOptions = {
+  window?: Window & typeof globalThis
   baseClass?: ClassBasedComponent
 }
 
@@ -18,7 +19,7 @@ export function component(
   fn: FunctionalComponent,
   options?: ComponentOptions
 ): ClassBasedComponent {
-  return class extends (options?.baseClass ?? HTMLElement) {
+  return class extends (options?.baseClass ?? (options?.window ?? window).HTMLElement) {
     private _connected?: ConnectedHook
     private _disconnected?: DisconnectedHook
     private _adopted?: AdoptedHook

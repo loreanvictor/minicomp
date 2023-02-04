@@ -1,6 +1,6 @@
 {
   "name": "minicomp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Minimalistic library for creating Web Components",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
@@ -49,6 +49,7 @@
     "htmplate": "^0.1.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
+    "jsdom": "^21.1.0",
     "quel": "^0.3.2",
     "rehtm": "^0.2.0",
     "sleep-promise": "^9.1.0",
