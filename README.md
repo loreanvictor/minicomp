@@ -12,7 +12,7 @@
 
 Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
 
-```js
+```javascript
 import { define, onConnected } from 'minicomp'
 
 define('say-hi', ({ to }) => {
@@ -67,7 +67,7 @@ On [node](https://nodejs.org/en/):
 npm i minicomp
 ```
 In the browser:
-```js
+```javascript
 import { define } from 'https://esm.sh/minicomp'
 ```
 
@@ -77,7 +77,7 @@ import { define } from 'https://esm.sh/minicomp'
 
 👉 Define a custom element:
 
-```js
+```javascript
 import { define } from 'minicomp'
 
 define('my-el', () => '<div>Hellow World!</div>')
