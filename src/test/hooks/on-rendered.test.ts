@@ -12,6 +12,7 @@ describe(onRendered, () => {
     })
 
     const el = document.createElement('or-1')
+    document.body.appendChild(el)
     expect(cb).toHaveBeenCalledWith(el)
   })
 
@@ -24,7 +25,8 @@ describe(onRendered, () => {
       return '<div>Hi!</div>'
     })
 
-    document.createElement('or-2')
+    const el = document.createElement('or-2')
+    document.body.appendChild(el)
     expect(a).toEqual([1, 2])
   })
 })

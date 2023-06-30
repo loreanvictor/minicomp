@@ -14,6 +14,7 @@ describe(onProperty, () => {
     })
 
     const el = document.createElement('op-1') as PropableElement
+    document.body.appendChild(el)
     el.setProperty('foo', 'bar')
 
     expect(el['foo']).toBe('bar')

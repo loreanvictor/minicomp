@@ -12,6 +12,7 @@ describe(onAttributeChanged, () => {
     })
 
     const el = document.createElement('oac-1')
+    document.body.appendChild(el)
     el.setAttribute('foo', 'bar')
     expect(cb).toHaveBeenCalledWith('foo', 'bar', el)
   })
@@ -25,6 +26,7 @@ describe(onAttributeChanged, () => {
     })
 
     const el = document.createElement('oac-2')
+    document.body.appendChild(el)
     el.setAttribute('foo', 'bar')
     el.removeAttribute('foo')
     expect(cb).toHaveBeenCalledWith('foo', ATTRIBUTE_REMOVED, el)
@@ -39,6 +41,7 @@ describe(onAttributeChanged, () => {
     })
 
     const el = document.createElement('oac-3')
+    document.body.appendChild(el)
     el.setAttribute('foo', 'bar')
     el.setAttribute('foo', 'bar')
     expect(cb).toHaveBeenCalledTimes(2)
@@ -54,6 +57,7 @@ describe(onAttributeChanged, () => {
     })
 
     const el = document.createElement('oac-4')
+    document.body.appendChild(el)
     el.setAttribute('foo', 'bar')
     expect(a).toEqual([1, 2])
   })

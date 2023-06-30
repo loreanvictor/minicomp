@@ -13,6 +13,7 @@ describe(define, () => {
   test('defines a component.', () => {
     define('def-1', () => '<div>Hellow World!</div>')
     const el = document.createElement('def-1')
+    document.body.appendChild(el)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 
@@ -20,6 +21,7 @@ describe(define, () => {
     const comp = definable('def-2', () => '<div>Hellow World!</div>')
     define(comp)
     const el = document.createElement('def-2')
+    document.body.appendChild(el)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 
@@ -38,6 +40,7 @@ describe(define, () => {
       return div
     })
     const el = document.createElement('def-4')
+    document.body.appendChild(el)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 
@@ -48,6 +51,7 @@ describe(define, () => {
     }).define('def-5', () => '<div>Hellow World!</div>')
 
     const el = document.createElement('p', { is: 'def-5' })
+    document.body.appendChild(el)
     expect(el).toBeInstanceOf(HTMLParagraphElement)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
@@ -56,6 +60,7 @@ describe(define, () => {
     define('def-6', () => template`<div>Hellow World!</div>`)
 
     const el = document.createElement('def-6')
+    document.body.appendChild(el)
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 
@@ -64,9 +69,11 @@ describe(define, () => {
     using({ window }).define('def-7', () => '<div>Hellow World!</div>')
 
     const el1 = document.createElement('def-7')
+    document.body.appendChild(el1)
     expect(el1.shadowRoot).toBeFalsy()
 
     const el2 = window.document.createElement('def-7')
+    window.document.body.appendChild(el2)
     expect(el2.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 
@@ -76,9 +83,20 @@ describe(define, () => {
     window.customElements.define('def-8', comp)
 
     const el1 = document.createElement('def-8')
+    document.body.appendChild(el1)
     expect(el1.shadowRoot).toBeFalsy()
 
     const el2 = window.document.createElement('def-8')
+    window.document.body.appendChild(el2)
     expect(el2.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('works well will `document.createElement()`.', () => {
+    define('def-9', ({name}) => `<div>Hellow ${name}!</div>`)
+    const el = document.createElement('def-9')
+    el.setAttribute('name', 'World')
+    document.body.appendChild(el)
+
+    expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
 })

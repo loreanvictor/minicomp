@@ -13,6 +13,7 @@ describe(onPropertyChanged, () => {
     })
 
     const el = document.createElement('opc-1') as PropableElement
+    document.body.appendChild(el)
     el.setProperty('foo', 'bar')
     expect(cb).toHaveBeenCalledWith('foo', 'bar', el)
     expect(el['foo']).toBe('bar')
@@ -28,6 +29,7 @@ describe(onPropertyChanged, () => {
     })
 
     const el = document.createElement('opc-2') as PropableElement
+    document.body.appendChild(el)
     el.setProperty('foo', 'bar')
     expect(a).toEqual([1, 2])
   })

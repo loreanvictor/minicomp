@@ -26,40 +26,50 @@ export function component(
     private _attributeChanged?: AttributeChangedHook
     private _propertyChanged?: PropertyChangedHook
 
+    private _shouldHydrate = false
+    private _initialized = false
+    private _root: ShadowRoot
+
     constructor() {
       super()
 
-      const props = {}
-      for (const attr of this.attributes) {
-        props[attr.name] = attr.value
-      }
-
-      const [node, hooks] = acceptHooks(() => fn(props), this)
-      this._connected = hooks.onConnected
-      this._disconnected = hooks.onDisconnected
-      this._adopted = hooks.onAdopted
-      this._attributeChanged = hooks.onAttributeChanged
-      this._propertyChanged = hooks.onPropertyChanged
-
-      // TODO: test this using happy-dom (https://www.npmjs.com/package/happy-dom)
-      /* istanbul ignore if */
-      if (isSSRTemplate(node) && this.shadowRoot) {
-        node.hydrateRoot(this.shadowRoot)
-      } else {
-        const root = this.attachShadow({ mode: 'open' })
-        if (typeof node === 'string') {
-          root.innerHTML = node
-        } else if (isSSRTemplate(node)) {
-          root.appendChild(node.create())
-        } else {
-          root.appendChild(node)
-        }
-      }
-
-      hooks.onRendered && hooks.onRendered(this)
+      this._shouldHydrate = !!this.shadowRoot
+      /* istanbul ignore next */
+      this._root = this._shouldHydrate ? this.shadowRoot! : this.attachShadow({ mode: 'open' })
     }
 
     connectedCallback() {
+      if (!this._initialized) {
+        this._initialized = true
+        const props = {}
+        for (const attr of this.attributes) {
+          props[attr.name] = attr.value
+        }
+
+        const [node, hooks] = acceptHooks(() => fn(props), this)
+        this._connected = hooks.onConnected
+        this._disconnected = hooks.onDisconnected
+        this._adopted = hooks.onAdopted
+        this._attributeChanged = hooks.onAttributeChanged
+        this._propertyChanged = hooks.onPropertyChanged
+
+        // TODO: test this using happy-dom (https://www.npmjs.com/package/happy-dom)
+        /* istanbul ignore if */
+        if (isSSRTemplate(node) && this._shouldHydrate) {
+          node.hydrateRoot(this._root)
+        } else {
+          if (typeof node === 'string') {
+            this._root.innerHTML = node
+          } else if (isSSRTemplate(node)) {
+            this._root.appendChild(node.create())
+          } else {
+            this._root.appendChild(node)
+          }
+        }
+
+        hooks.onRendered && hooks.onRendered(this)
+      }
+
       this._connected && this._connected(this)
     }
 

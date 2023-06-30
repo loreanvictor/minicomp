@@ -11,7 +11,8 @@ describe(onAdopted, () => {
       return '<div>Hi!</div>'
     })
 
-    const el = document.createElement('oa-1');
+    const el = document.createElement('oa-1')
+    document.body.appendChild(el);
     (el as any).adoptedCallback()
     expect(cb).toHaveBeenCalledWith(el)
   })

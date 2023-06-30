@@ -1,21 +1,13 @@
-import { template, use } from 'htmplate'
-import { observe, Timer, Subject } from 'quel'
-import { define, onAttribute, onCleanup } from '../src'
+import { define } from '../src'
+import { ref, template } from 'rehtm'
 
+define('a-button', () => {
+  const span = ref()
+  let count = 0
 
-const tmpl = template`<div>elapsed: <span>0</span></div>`
-
-define('test-el', ({ start }) => {
-  const host$ = use(tmpl)
-  const span$ = host$.querySelector('span')
-
-  const pad = start ? parseInt(start) : 0
-  const timers = new Subject()
-
-  observe($ => span$.textContent = ($($(timers)) ?? 0) + pad)
-
-  onAttribute('rate', (value) => timers.set(new Timer(parseInt(value))))
-  onCleanup(() => timers.get().stop())
-
-  return host$
+  return template`
+    <button onclick=${() => span.current.textContent = ++count}>
+      Client <span ref=${span} role="status">0</span>
+    </button>
+  `
 })
