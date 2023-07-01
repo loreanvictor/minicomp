@@ -11,3 +11,5 @@ define('a-button', () => {
     </button>
   `
 })
+
+define('b-stuff', () => template`<div>Hellow <slot></slot></div>`)

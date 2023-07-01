@@ -2,7 +2,7 @@ import { onRendered } from '../../hooks'
 import { define } from '../../define'
 
 
-describe(onRendered, () => {
+describe('onRendered', () => {
   test('is called when the node is rendered.', () => {
     const cb = jest.fn()
     define('or-1', () => {

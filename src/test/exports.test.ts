@@ -1,7 +1,7 @@
 import {
   define, definable, DefinableCompoennt, PropableElement,
   onConnected, onDisconnected, onAttributeChanged, onAdopted, onRendered,
-  onPropertyChanged, currentNode,
+  onPropertyChanged, currentNode, hooksMeta, ownerDocument,
   ATTRIBUTE_REMOVED, onAttribute, onProperty, onCleanup, on,
   component, FunctionalComponent, ClassBasedComponent,
 } from '../index'
@@ -19,6 +19,8 @@ test('stuff are exported properly.', () => {
   expect(onRendered).toBeDefined()
   expect(onPropertyChanged).toBeDefined()
   expect(currentNode).toBeDefined()
+  expect(hooksMeta).toBeDefined()
+  expect(ownerDocument).toBeDefined()
 
   expect(ATTRIBUTE_REMOVED).toBeDefined()
   expect(onAttribute).toBeDefined()

@@ -2,7 +2,7 @@ import { ATTRIBUTE_REMOVED, onAttributeChanged } from '../../hooks'
 import { define } from '../../define'
 
 
-describe(onAttributeChanged, () => {
+describe('onAttributeChanged', () => {
   test('is called when an attribute is changed.', () => {
     const cb = jest.fn()
     define('oac-1', () => {

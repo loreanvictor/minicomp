@@ -2,7 +2,7 @@ import { onProperty } from '../../property'
 import { define } from '../../define'
 import { PropableElement } from '../../component'
 
-describe(onProperty, () => {
+describe('onProperty', () => {
   test('is called when a property is changed.', () => {
     const cb = jest.fn()
     const cb2 = jest.fn()

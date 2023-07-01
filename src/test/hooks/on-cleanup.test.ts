@@ -2,7 +2,7 @@ import { onCleanup } from '../../cleanup'
 import { define } from '../../define'
 
 
-describe(onCleanup, () => {
+describe('onCleanup', () => {
   test('is called when the node is removed.', async () => {
     const cb = jest.fn()
     define('ocl-1', () => {

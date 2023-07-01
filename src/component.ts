@@ -33,9 +33,11 @@ export function component(
     constructor() {
       super()
 
-      this._shouldHydrate = !!this.shadowRoot
+      // const internals = this.attachInternals()
+      const internals = this
+      this._shouldHydrate = !!internals.shadowRoot
       /* istanbul ignore next */
-      this._root = this._shouldHydrate ? this.shadowRoot! : this.attachShadow({ mode: 'open' })
+      this._root = this._shouldHydrate ? internals.shadowRoot! : this.attachShadow({ mode: 'open' })
     }
 
     connectedCallback() {
@@ -46,7 +48,7 @@ export function component(
           props[attr.name] = attr.value
         }
 
-        const [node, hooks] = acceptHooks(() => fn(props), this)
+        const [node, { hooks }] = acceptHooks(() => fn(props), { currentNode: this })
         this._connected = hooks.onConnected
         this._disconnected = hooks.onDisconnected
         this._adopted = hooks.onAdopted

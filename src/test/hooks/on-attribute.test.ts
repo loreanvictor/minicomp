@@ -3,7 +3,7 @@ import { define } from '../../define'
 import { ATTRIBUTE_REMOVED } from '../../hooks'
 
 
-describe(onAttribute, () => {
+describe('onAttribute', () => {
   test('is called when the attribute is changed.', () => {
     const cb = jest.fn()
     const cb2 = jest.fn()

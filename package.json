@@ -1,6 +1,6 @@
 {
   "name": "minicomp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Minimalistic library for creating Web Components",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
@@ -60,5 +60,8 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.4",
     "vite": "^4.0.1"
+  },
+  "dependencies": {
+    "haken": "^0.0.2"
   }
 }

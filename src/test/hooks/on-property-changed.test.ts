@@ -3,7 +3,7 @@ import { define } from '../../define'
 import { PropableElement } from '../../component'
 
 
-describe(onPropertyChanged, () => {
+describe('onPropertyChanged', () => {
   test('is called when a property is changed.', () => {
     const cb = jest.fn()
     define('opc-1', () => {

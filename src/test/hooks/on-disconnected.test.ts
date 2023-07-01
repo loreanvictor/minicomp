@@ -2,7 +2,7 @@ import { onDisconnected } from '../../hooks'
 import { define } from '../../define'
 
 
-describe(onDisconnected, () => {
+describe('onDisconnected', () => {
   test('is called when the node is disconnected.', () => {
     const cb = jest.fn()
     define('od-1', () => {

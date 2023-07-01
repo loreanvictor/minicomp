@@ -2,7 +2,7 @@ import { onAdopted } from '../../hooks'
 import { define } from '../../define'
 
 
-describe(onAdopted, () => {
+describe('onAdopted', () => {
   test('is called when the node is adopted.', () => {
     const cb = jest.fn()
     define('oa-1', () => {

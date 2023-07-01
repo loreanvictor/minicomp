@@ -2,7 +2,7 @@ import { onConnected } from '../../hooks'
 import { define } from '../../define'
 
 
-describe(onConnected, () => {
+describe('onConnected', () => {
   test('is called when the node is connected.', () => {
     const cb = jest.fn()
     define('oc-1', () => {

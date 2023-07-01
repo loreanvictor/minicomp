@@ -1,3 +1,6 @@
+import { buildHooksContext } from 'haken'
+
+
 export const ATTRIBUTE_REMOVED = Symbol()
 
 export type ConnectedHook = (node: HTMLElement) => void
@@ -14,84 +17,31 @@ export type Hook =
   | PropertyChangedHook
   | RenderedHook
 
-
-type InternalFrame = {
-  currentNode?: HTMLElement
-  onDisconnected?: DisconnectedHook | DisconnectedHook[]
-  onConnected?: ConnectedHook | ConnectedHook[]
-  onAdopted?: AdoptedHook | AdoptedHook[]
-  onRendered?: RenderedHook | RenderedHook[]
-  onAttributeChanged?: AttributeChangedHook | AttributeChangedHook[]
-  onPropertyChanged?: PropertyChangedHook | PropertyChangedHook[]
+type Hooks = {
+  onPropertyChanged: PropertyChangedHook
+  onAttributeChanged: AttributeChangedHook
+  onRendered: RenderedHook
+  onAdopted: AdoptedHook
+  onConnected: ConnectedHook
+  onDisconnected: DisconnectedHook
 }
 
-export type RegisteredHooks = {
-  onPropertyChanged?: PropertyChangedHook
-  onAttributeChanged?: AttributeChangedHook
-  onRendered?: RenderedHook
-  onAdopted?: AdoptedHook
-  onConnected?: ConnectedHook
-  onDisconnected?: DisconnectedHook
-}
-
-const stack: InternalFrame[] = []
-
-function prepareFrame(frame: InternalFrame): RegisteredHooks {
-  const result: RegisteredHooks = {}
-  for (const key in frame) {
-    const value = frame[key]
-    if (value) {
-      if (Array.isArray(value)) {
-        result[key] = ((...args: any[]) => {
-          for (const fn of value) {
-            fn(...args)
-          }
-        }) as any
-      } else {
-        result[key] = value
-      }
-    }
-  }
-
-  return result
-}
-
-export function acceptHooks<T>(fn: () => T, currentNode?: HTMLElement): [T, RegisteredHooks] {
-  const ctx: InternalFrame = { currentNode }
-  stack.push(ctx)
-  const result = fn()
-  stack.pop()
-
-  return [result, prepareFrame(ctx)]
-}
-
-function hook<
-  Key extends keyof RegisteredHooks,
-  HookType extends NonNullable<RegisteredHooks[Key]>
->(prop: Key, fn: HookType) {
-  const current = stack[stack.length - 1]
-
-  if (current) {
-    const currentHook = current[prop]
-    if (currentHook) {
-      if (Array.isArray(currentHook)) {
-        currentHook.push(fn as any)
-      } else {
-        current[prop] = [currentHook, fn as any]
-      }
-    } else {
-      current[prop] = fn
-    }
-  }
+type Meta = {
+  currentNode: HTMLElement
 }
 
 
-export const currentNode = () => stack[stack.length - 1]?.currentNode
+const { acceptHooks: accept, hook, hooksMeta: meta } = buildHooksContext<Hooks, Meta>()
 
+export const currentNode = () => meta().currentNode
 export const ownerDocument = () => currentNode()?.ownerDocument
-export const onConnected = (fn: ConnectedHook) => hook('onConnected', fn)
-export const onDisconnected = (fn: DisconnectedHook) => hook('onDisconnected', fn)
-export const onAdopted = (fn: AdoptedHook) => hook('onAdopted', fn)
-export const onRendered = (fn: RenderedHook) => hook('onRendered', fn)
-export const onAttributeChanged = (fn: AttributeChangedHook) => hook('onAttributeChanged', fn)
-export const onPropertyChanged = (fn: PropertyChangedHook) => hook('onPropertyChanged', fn)
+
+export const onConnected = hook('onConnected')
+export const onDisconnected = hook('onDisconnected')
+export const onAdopted = hook('onAdopted')
+export const onRendered = hook('onRendered')
+export const onAttributeChanged = hook('onAttributeChanged')
+export const onPropertyChanged = hook('onPropertyChanged')
+
+export const acceptHooks = accept
+export const hooksMeta = meta
