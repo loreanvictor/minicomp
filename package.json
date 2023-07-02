@@ -1,6 +1,6 @@
 {
   "name": "minicomp",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Minimalistic library for creating Web Components",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
-    "@happy-dom/jest-environment": "^9.20.3",
     "@sindresorhus/tsconfig": "^3.0.1",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.15",

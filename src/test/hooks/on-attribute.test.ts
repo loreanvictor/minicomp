@@ -43,13 +43,13 @@ describe('onAttribute', () => {
 
   test('it is called with the initial value of the attribute as well.', () => {
     const cb = jest.fn()
+    document.body.innerHTML = '<oaa-3 foo="bar"></oaa-3>'
     define('oaa-3', () => {
       onAttribute('foo', cb)
 
       return '<div>Hi!</div>'
     })
 
-    document.body.innerHTML = '<oaa-3 foo="bar"></oaa-3>'
     expect(cb).toHaveBeenCalledTimes(1)
     expect(cb).toHaveBeenCalledWith('bar')
   })

@@ -26,8 +26,8 @@ describe(define, () => {
   })
 
   test('handles attributes.', () => {
-    define('def-3', ({ name }: { name: string}) => `<div>Hellow ${name}</div>`)
     document.body.innerHTML = '<def-3 name="World!"></def-3>'
+    define('def-3', ({ name }: { name: string}) => `<div>Hellow ${name}</div>`)
     const el = document.querySelector('def-3')!
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
