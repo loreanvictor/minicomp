@@ -1,6 +1,6 @@
 {
   "name": "minicomp",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Minimalistic library for creating Web Components",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",

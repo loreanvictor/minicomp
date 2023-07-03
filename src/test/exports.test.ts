@@ -1,5 +1,5 @@
 import {
-  define, definable, DefinableCompoennt, PropableElement,
+  define, definable, DefinableCompoent, PropableElement,
   onConnected, onDisconnected, onAttributeChanged, onAdopted, onRendered,
   onPropertyChanged, currentNode, hooksMeta, ownerDocument,
   ATTRIBUTE_REMOVED, onAttribute, onProperty, onCleanup, on,
@@ -10,7 +10,7 @@ import {
 test('stuff are exported properly.', () => {
   expect(define).toBeDefined()
   expect(definable).toBeDefined()
-  expect(<DefinableCompoennt>{}).toBeDefined()
+  expect(<DefinableCompoent>{}).toBeDefined()
 
   expect(onConnected).toBeDefined()
   expect(onDisconnected).toBeDefined()
