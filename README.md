@@ -445,6 +445,12 @@ using({ window }).define(SayHi)
 window.document.body.innerHTML = '<say-hi to="Jack"></say-hi>'
 ```
 
+<div align="right">
+
+[**▷ TRY IT**](https://stackblitz.com/edit/stackblitz-starters-khv24t?file=say-hi.mjs)
+
+</div>
+
 
 <br>
 
