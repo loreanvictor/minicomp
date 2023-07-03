@@ -423,6 +423,31 @@ using({ window: myWindow }).define('my-comp', () => {
 
 <br>
 
+It might be useful to describe components independent of the `window` object, and then define them on different
+`window` instances. Use `definable` to separate component description from the `window` object:
+
+```js
+import { definable, ownerDocument } from 'minicomp'
+import { re } from 'rehtm'
+
+export default definable('say-hi', ({ to }) => {
+  const { html } = re(ownerDocument())
+  return html`<div>Hellow ${to}!</div>`
+})
+```
+```js
+import { using } from 'minicomp'
+import SayHi from './say-hi'
+
+const window = new Window()
+using({ window }).define(SayHi)
+
+window.document.body.innerHTML = '<say-hi to="Jack"></say-hi>'
+```
+
+
+<br>
+
 # Contribution
 
 You need [node](https://nodejs.org/en/), [NPM](https://www.npmjs.com) to start and [git](https://git-scm.com) to start.
