@@ -45,6 +45,7 @@ define('say-hi', ({ to }) => {
     - [onAttribute](#onattribute)
     - [onProperty](#onproperty)
     - [on](#on)
+    - [useDispatch](#usedispatch)
     - [onConnected](#onconnected)
     - [onDisconnected](#ondisconnected)
     - [onAttributeChanged](#onattributechanged)
@@ -191,6 +192,41 @@ Is called when specified property is set using `.setProperty()` method.
 on(name: string, hook: (event: Event) => void)
 ```
 Adds an event listener to the custom element (via `.addEventListener()`). For example, `on('click', () => ...)` will add a click listener to the element.
+
+<br>
+
+### useDispatch
+
+```ts
+useDispatch<T>(name: string, options: EventInit = {}): (data: T) => void
+```
+Returns a dispatch function that will dispatch events of given name (and with given options) from the element. Dispatched events can be caught via `.addEventListener()`, or by by using attributes like `on${name}` (e.g. `onmyevent`):
+
+```js
+import { define, useDispatch } from 'minicomp'
+import { html } from 'rehtm'
+
+
+define('my-el', () => {
+  const dispatch = useDispatch('even')
+  let count = 0
+  
+  return html`
+    <button onclick=${() => ++count % 2 === 0 && dispatch(count)}>
+      Click Me!
+    </button>
+  `
+})
+```
+```html
+<my-el oneven="window.alert(event.detail)"></my-el>
+```
+
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/GRwEwNb?editors=1010)
+
+</div>
 
 <br>
 

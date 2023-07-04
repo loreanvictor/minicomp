@@ -4,6 +4,7 @@ import {
   onPropertyChanged, currentNode, hooksMeta, ownerDocument,
   ATTRIBUTE_REMOVED, onAttribute, onProperty, onCleanup, on,
   component, FunctionalComponent, ClassBasedComponent,
+  useDispatch,
 } from '../index'
 
 
@@ -27,6 +28,7 @@ test('stuff are exported properly.', () => {
   expect(onProperty).toBeDefined()
   expect(onCleanup).toBeDefined()
   expect(on).toBeDefined()
+  expect(useDispatch).toBeDefined()
 
   expect(component).toBeDefined()
   expect(<FunctionalComponent>{}).toBeDefined()

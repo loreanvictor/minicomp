@@ -1,4 +1,4 @@
-import { define } from '../src'
+import { define, useDispatch } from '../src'
 import { ref, template } from 'rehtm'
 
 define('a-button', () => {
@@ -13,3 +13,11 @@ define('a-button', () => {
 })
 
 define('b-stuff', () => template`<div>Hellow <slot></slot></div>`)
+
+define('c-thingy', () => {
+  let count = 0
+  const dispatch = useDispatch('evenclick')
+  const click = () => ++count % 2 === 0 && dispatch(count)
+
+  return template`<button onclick=${click}>Click ME!</button>`
+})
