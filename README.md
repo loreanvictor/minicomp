@@ -40,19 +40,23 @@ define('say-hi', ({ to }) => {
 - [Contents](#contents)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Provided Hooks](#provided-hooks)
-    - [onCleanup](#oncleanup)
-    - [onAttribute](#onattribute)
+  - [Common Hooks](#common-hooks)
+    <!-- - [onAttribute](#onattribute)
     - [onProperty](#onproperty)
     - [on](#on)
     - [useDispatch](#usedispatch)
+    - [currentNode](#currentnode) -->
+  - [Lifecycle Hooks](#lifecycle-hooks)
+    <!-- - [onCleanup](#oncleanup)
+    - [onRendered](#onrendered)
     - [onConnected](#onconnected)
     - [onDisconnected](#ondisconnected)
     - [onAttributeChanged](#onattributechanged)
-    - [onPropertyChanged](#onpropertychanged)
-    - [onRendered](#onrendered)
-    - [currentNode](#currentnode)
-    - [ownerDocument](#ownerdocument)
+    - [onPropertyChanged](#onpropertychanged) -->
+  - [Hooks for SSR](#hooks-for-ssr)
+    <!-- - [ownerDocument](#ownerdocument)
+    - [onHydrated](#onhydrated)
+    - [onFirstRender](#onfirstrender) -->
   - [Rules for Hooks](#rules-for-hooks)
   - [Custom Hooks](#custom-hooks)
   - [Server Side Rendering](#server-side-rendering)
@@ -150,14 +154,9 @@ el.setProperty('myProp', { whatever: 'you want' })
 
 <br>
 
-## Provided Hooks
+## Common Hooks
 
-### onCleanup
-```ts
-onCleanup(hook: () => void)
-```
-
-Is called after the element is removed from the document and not added back immediately.
+The following hooks are commonly used by components:
 
 <br>
 
@@ -228,6 +227,30 @@ define('my-el', () => {
 
 </div>
 
+### currentNode
+
+```ts
+currentNode(): HTMLElement | undefined
+```
+
+Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
+to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
+
+<br>
+
+## Lifecycle Hooks
+
+Use the following hooks to tap into life cycle events of custom elements:
+
+<br>
+
+### onCleanup
+```ts
+onCleanup(hook: () => void)
+```
+
+Is called after the element is removed from the document and not added back immediately.
+
 <br>
 
 ### onConnected
@@ -285,14 +308,12 @@ Is called after the returned DOM is attached to the element's [shadow root](http
 
 <br>
 
-### currentNode
 
-```ts
-currentNode(): HTMLElement | undefined
-```
+## Hooks for SSR
 
-Returns the current element being rendered, undefined if used out of a component function. Useful for custom hooks who need
-to conduct an operation during rendering (for hooks that operate after rendering, use `.onRendered()`).
+The following hooks are useful for server side rendering:
+
+<br>
 
 ### ownerDocument
 
@@ -300,7 +321,27 @@ to conduct an operation during rendering (for hooks that operate after rendering
 ownerDocument(): Document
 ```
 
-Returns the document that the element is in. Useful for components (and hooks) that want to be operable in environments where there is no global document object (e.g. during SSR).
+Returns the document that the element is in. Useful for components (and hooks) that want to be operable in environments where there is no global document object.
+
+<br>
+
+### onHydrated
+
+```ts
+onHydrated(hook: (node: HTMLElement) => void)
+```
+
+Is called when the element is hydrated on the client.
+
+<br>
+
+### onFirstRender
+
+```ts
+onFirstRender(hook: (node: HTMLElement) => void)
+```
+
+Is called when the element is rendered for the first time (either on the server or on the client).
 
 <br>
 

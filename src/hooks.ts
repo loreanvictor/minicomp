@@ -6,7 +6,7 @@ export const ATTRIBUTE_REMOVED = Symbol()
 export type ConnectedHook = (node: HTMLElement) => void
 export type DisconnectedHook = (node: HTMLElement) => void
 export type AdoptedHook = (node: HTMLElement) => void
-export type RenderedHook = (node: HTMLElement) => void
+export type RenderedHook = (node: HTMLElement, hydrated: boolean) => void
 export type AttributeChangedHook = (name: string, value: string | typeof ATTRIBUTE_REMOVED, node: HTMLElement) => void
 export type PropertyChangedHook = (name: string, value: unknown, node: HTMLElement) => void
 export type Hook =

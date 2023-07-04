@@ -6,4 +6,6 @@ export * from './attribute'
 export * from './on'
 export * from './property'
 export * from './dispatch'
+export * from './ssr-hooks'
+
 

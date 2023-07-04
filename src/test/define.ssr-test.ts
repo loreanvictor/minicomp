@@ -1,5 +1,4 @@
-jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
-
+import './polyfill'
 
 import { JSDOM } from 'jsdom'
 import { using, define, definable } from '../define'

@@ -62,10 +62,11 @@ export function component(
         this._attributeChanged = hooks.onAttributeChanged
         this._propertyChanged = hooks.onPropertyChanged
 
-        // TODO: test this using happy-dom (https://www.npmjs.com/package/happy-dom)
-        /* istanbul ignore if */
+        let hydrated = false
+
         if (isSSRTemplate(node) && this._shouldHydrate) {
           node.hydrateRoot(this._root)
+          hydrated = true
         } else {
           if (typeof node === 'string') {
             this._root.innerHTML = node
@@ -76,7 +77,7 @@ export function component(
           }
         }
 
-        hooks.onRendered && hooks.onRendered(this)
+        hooks.onRendered && hooks.onRendered(this, hydrated)
       }
 
       this._connected && this._connected(this)
