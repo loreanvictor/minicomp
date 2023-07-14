@@ -7,5 +7,6 @@ export * from './on'
 export * from './property'
 export * from './dispatch'
 export * from './ssr-hooks'
+export * from './controls'
 
 

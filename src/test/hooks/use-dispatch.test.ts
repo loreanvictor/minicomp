@@ -54,4 +54,11 @@ describe(useDispatch, () => {
     expect(cb).toHaveBeenCalledTimes(1)
     expect(global.console.log).toHaveBeenCalledTimes(2)
   })
+
+  test('does not break when used outside of a component.', () => {
+    expect(() => {
+      const dispatch = useDispatch('test')
+      dispatch('Hello!')
+    }).not.toThrow()
+  })
 })

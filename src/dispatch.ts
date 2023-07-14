@@ -3,6 +3,10 @@ import { onAttribute } from './attribute'
 
 
 export function useDispatch<D = any>(name: string, options: EventInit = {}) {
+  if (!currentNode()) {
+    return (_: D) => {}
+  }
+
   const window = ownerDocument()!.defaultView!
   const current = currentNode()!
 

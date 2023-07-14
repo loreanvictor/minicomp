@@ -4,7 +4,7 @@ import {
   onPropertyChanged, currentNode, hooksMeta, ownerDocument,
   ATTRIBUTE_REMOVED, onAttribute, onProperty, onCleanup, on,
   component, FunctionalComponent, ClassBasedComponent,
-  useDispatch, onHydrated, onFirstRender,
+  useDispatch, onHydrated, onFirstRender, attachControls, Controllable,
 } from '../index'
 
 
@@ -22,6 +22,8 @@ test('stuff are exported properly.', () => {
   expect(currentNode).toBeDefined()
   expect(hooksMeta).toBeDefined()
   expect(ownerDocument).toBeDefined()
+  expect(attachControls).toBeDefined()
+  expect(<Controllable<unknown>>{}).toBeDefined()
 
   expect(ATTRIBUTE_REMOVED).toBeDefined()
   expect(onAttribute).toBeDefined()

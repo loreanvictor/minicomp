@@ -1,5 +1,5 @@
 import {
-  acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED, PropertyChangedHook
+  acceptHooks, ConnectedHook, DisconnectedHook, AdoptedHook, AttributeChangedHook, ATTRIBUTE_REMOVED, PropertyChangedHook, Meta
 } from './hooks'
 import { SSRTemplate, isSSRTemplate } from './ssr'
 
@@ -30,6 +30,8 @@ export function component(
     private _initialized = false
     private _root: ShadowRoot
 
+    public readonly controls = {}
+
     constructor() {
       super()
 
@@ -55,7 +57,13 @@ export function component(
           props[attr.name] = attr.value
         }
 
-        const [node, { hooks }] = acceptHooks(() => fn(props), { currentNode: this })
+        const [node, { hooks }] = acceptHooks(
+          () => fn(props),
+          {
+            currentNode: this,
+            controls: this.controls
+          } as Meta
+        )
         this._connected = hooks.onConnected
         this._disconnected = hooks.onDisconnected
         this._adopted = hooks.onAdopted

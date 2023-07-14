@@ -17,7 +17,7 @@ export type Hook =
   | PropertyChangedHook
   | RenderedHook
 
-type Hooks = {
+export type Hooks = {
   onPropertyChanged: PropertyChangedHook
   onAttributeChanged: AttributeChangedHook
   onRendered: RenderedHook
@@ -26,8 +26,8 @@ type Hooks = {
   onDisconnected: DisconnectedHook
 }
 
-type Meta = {
-  currentNode: HTMLElement
+export type Meta = {
+  currentNode: HTMLElement,
 }
 
 

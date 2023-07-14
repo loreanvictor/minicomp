@@ -238,6 +238,52 @@ to conduct an operation during rendering (for hooks that operate after rendering
 
 <br>
 
+### attachControls
+
+```ts
+attachControls<ControlsType>(controls: ControlsType): void
+```
+
+Adds given controls to the current element, which are accessible via its `.controls` property. Useful for when your component needs
+to expose some functionality to its users.
+
+```js
+import { define, attachControls } from 'minicomp'
+
+
+define('my-video-player', () => {
+  const video = document.createElement('video')
+  const controls = {
+    play: () => video.play(),
+    pause: () => video.pause(),
+    seek: (time) => video.currentTime = time,
+  }
+  
+  attachControls(controls)
+  
+  return video
+})
+```
+```html
+<my-video-player></my-video-player>
+```
+```js
+const player = document.querySelector('my-video-player')
+player.controls.seek(10)
+```
+
+For typing controls, you can use the `Controllable` interface:
+
+```ts
+import { Controllable } from 'minicomp'
+
+
+const player = document.querySelector('my-video-player') as Controllable<VideoControls>
+// ...
+```
+
+<br>
+
 ## Lifecycle Hooks
 
 Use the following hooks to tap into life cycle events of custom elements:
