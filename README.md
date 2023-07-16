@@ -92,15 +92,33 @@ define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
 👉 Use hooks to tap into [custom elements' life cycle callbacks](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks): 
 
 ```js
-import { define, onAttribute } from 'minicomp'
+import { define, onConnected, onDisconnected } from 'minicomp'
 
-define('say-hi', () => {
+define('my-el', () => {
   onConnected(() => console.log('CONNECTED!'))
   onDisconnected(() => console.log('DISCONNECTED'))
   
   return '<div>Hellow World!</div>'
 })
 ```
+Or to respond to changes:
+```js
+import { define, onAttribute, currentNode } from 'minicomp'
+
+define('say-hi', () => {
+  const host = currentNode().shadowRoot
+  onAttribute('to', name => {
+    host.querySelector('span').textContent = name
+  })
+
+  return '<div>Hellow <span></span></div>'
+})
+```
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/NWEYggY)
+
+</div>
 
 <br><br>
 
@@ -155,6 +173,23 @@ onAttribute(
 )
 ```
 Is called with the initial value of specified attribute (`undefined` if not passed initially) and whenever the value of specified attribute changes (via `.setAttribute()`). Will be called with `ATTRIBUTE_REMOVED` symbol when specified attribute is removed (via `.removeAttribute()`).
+
+```js
+import { define, onAttribute } from 'minicomp'
+import { ref, html } from 'rehtm'
+
+define('say-hi', () => {
+  const span = ref()
+  onAttribute('to', name => span.current.textContent = name)
+  
+  return html`<div>Hellow <span ref=${span}></span></div>`
+})
+```
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/dyQmRzM)
+
+</div>
 
 <br>
 
