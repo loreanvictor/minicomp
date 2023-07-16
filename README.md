@@ -41,22 +41,8 @@ define('say-hi', ({ to }) => {
 - [Installation](#installation)
 - [Usage](#usage)
   - [Common Hooks](#common-hooks)
-    <!-- - [onAttribute](#onattribute)
-    - [onProperty](#onproperty)
-    - [on](#on)
-    - [useDispatch](#usedispatch)
-    - [currentNode](#currentnode) -->
   - [Lifecycle Hooks](#lifecycle-hooks)
-    <!-- - [onCleanup](#oncleanup)
-    - [onRendered](#onrendered)
-    - [onConnected](#onconnected)
-    - [onDisconnected](#ondisconnected)
-    - [onAttributeChanged](#onattributechanged)
-    - [onPropertyChanged](#onpropertychanged) -->
   - [Hooks for SSR](#hooks-for-ssr)
-    <!-- - [ownerDocument](#ownerdocument)
-    - [onHydrated](#onhydrated)
-    - [onFirstRender](#onfirstrender) -->
   - [Rules for Hooks](#rules-for-hooks)
   - [Custom Hooks](#custom-hooks)
   - [Server Side Rendering](#server-side-rendering)
@@ -91,9 +77,9 @@ define('my-el', () => '<div>Hellow World!</div>')
 <my-el></my-el>
 ```
 
-> ☝️ A component function can return a `Node` or a string representation of some DOM.
+> A component function can return a `Node` or a string representation of some DOM.
 
-<br>
+<br><br>
 
 👉 Attributes are passed as a parameter:
 
@@ -101,14 +87,14 @@ define('my-el', () => '<div>Hellow World!</div>')
 define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
 ```
 
-<br>
+<br><br>
 
 👉 Use hooks to tap into [custom elements' life cycle callbacks](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks): 
 
 ```js
-import { define, onConnected, onDisconnected } from 'minicomp'
+import { define, onAttribute } from 'minicomp'
 
-define('my-el', () => {
+define('say-hi', () => {
   onConnected(() => console.log('CONNECTED!'))
   onDisconnected(() => console.log('DISCONNECTED'))
   
@@ -116,7 +102,7 @@ define('my-el', () => {
 })
 ```
 
-<br>
+<br><br>
 
 👉 Use `using()` to define a component that extends another built-in element:
 
@@ -132,7 +118,7 @@ using({
 <p is="my-el"></p>
 ```
 
-<br>
+<br><br>
 
 👉 Use `.setProperty()` method of defined elements to set their properties:
 ```js
