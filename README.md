@@ -31,7 +31,7 @@ define('say-hi', ({ to }) => {
 - ☕&emsp;[Minimalistic components](#usage)
 - ⚡&emsp;[Composable hooks](#custom-hooks)
 - 🧩&emsp;Interoperable: create and update your DOM however you want
-- 🧬&emsp;[SSR support](#server-side-rendering) with isomorphic components (_experimental_)
+- 🧬&emsp;[SSR support](#server-side-rendering) with isomorphic components
 
 <br>
 
