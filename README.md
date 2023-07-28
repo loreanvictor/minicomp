@@ -27,11 +27,11 @@ define('say-hi', ({ to }) => {
 
 <br>
 
-- 🌱&emsp;Tiny wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
-- ☕&emsp;[Minimalistic components](#usage)
-- ⚡&emsp;[Composable hooks](#custom-hooks)
-- 🧩&emsp;Interoperable: create and update your DOM however you want
-- 🧬&emsp;[SSR support](#server-side-rendering) with isomorphic components
+- 🌱 Tiny wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
+- ☕  [Minimalistic components](#usage)
+- ⚡ [Composable hooks](#custom-hooks)
+- 🧩 Interoperable: create and update your DOM however you want
+- 🧬 [SSR support](#server-side-rendering) with isomorphic components
 
 <br>
 
