@@ -28,7 +28,7 @@ define('say-hi', ({ to }) => {
 <br>
 
 - 🌱 Tiny wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
-- ☕  [Minimalistic components](#usage)
+- 🍵  [Minimalistic components](#usage)
 - ⚡ [Composable hooks](#custom-hooks)
 - 🧩 Interoperable: create and update your DOM however you want
 - 🧬 [SSR support](#server-side-rendering) with isomorphic components
