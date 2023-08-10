@@ -31,6 +31,7 @@ export function component(
     private _root: ShadowRoot
 
     public readonly controls = {}
+    private _props = {}
 
     constructor() {
       super()
@@ -52,7 +53,7 @@ export function component(
     connectedCallback() {
       if (!this._initialized) {
         this._initialized = true
-        const props = {}
+        const props = {...this._props}
         for (const attr of this.attributes) {
           props[attr.name] = attr.value
         }
@@ -111,6 +112,7 @@ export function component(
 
     setProperty(name: string, value: unknown) {
       super[name] = value
+      this._props[name] = value
       this._propertyChanged && this._propertyChanged(name, value, this)
     }
   }

@@ -1,7 +1,7 @@
 import './polyfill'
 
 import { JSDOM } from 'jsdom'
-import { template } from 'rehtm'
+import { template, html } from 'rehtm'
 import { using, define, definable } from '../define'
 
 
@@ -92,6 +92,14 @@ describe(define, () => {
     const el = document.createElement('def-9')
     el.setAttribute('name', 'World')
     document.body.appendChild(el)
+
+    expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('components can be initialized with props.', () => {
+    define('def-10', ({ person }) => `<div>Hellow ${person.name}!</div>`)
+    document.body.appendChild(html`<def-10 person=${{ name: 'World' }}></def-10>`)
+    const el = document.querySelector('def-10')!
 
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
   })
