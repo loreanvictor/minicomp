@@ -26,4 +26,18 @@ describe('onProperty', () => {
     expect(cb2).toHaveBeenCalledTimes(1)
     expect(cb2).toHaveBeenCalledWith(undefined)
   })
+
+  test('does empty calls.', () => {
+    const cb = jest.fn()
+    define('op-2', () => {
+      onProperty('foo', () => cb())
+
+      return '<div>Hi!</div>'
+    })
+
+    const el = document.createElement('op-2')
+    document.body.appendChild(el)
+
+    expect(cb).toHaveBeenCalledTimes(1)
+  })
 })
