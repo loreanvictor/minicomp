@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="384px" height="332.703544px" viewBox="0 0 384 332.703544" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>symbol-outline-dark</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="symbol-outline-dark" transform="translate(-113.000000, -134.000000)" stroke-width="8">
+            <g transform="translate(113.000000, 134.000000)" id="Path">
+                <path d="M285.85,4.276 L379.1441,165.866294 L285.677874,328.289495 L226.30146,328.688014 L198.928192,281.275109 L258.062372,281.276036 L324.537809,166.138002 L258.468416,51.7030356 L198.277226,51.7021069 L225.659373,4.276 L285.85,4.276 Z" stroke="#FF5858"></path>
+                <path d="M98.153,4.276 L152.419816,4.276 L92.2472931,108.498435 L59.0823719,165.898649 L92.1671149,223.488346 L153.063235,328.703544 L98.3123664,328.703544 L4.85441266,166.413254 L98.153,4.276 Z" stroke="#E0144C"></path>
+            </g>
+        </g>
+    </g>
+</svg>

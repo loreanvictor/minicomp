@@ -629,3 +629,14 @@ npm run lint
 # run type checker
 npm run typecheck
 ```
+
+<br><br>
+
+<div align="center">
+
+<img src="./misc/symbol-outline-light.svg#gh-light-mode-only" height="96px">
+<img src="./misc/symbol-outline-dark.svg#gh-dark-mode-only" height="96px">
+
+</div>
+
+<br><br>
