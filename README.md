@@ -202,7 +202,7 @@ onProperty(name: string, hook: (value: unknown) => void)
 onProperty<T>(name: string, hook: (value: T) => void)
 ```
 
-Is called when specified property is set using `.setProperty()` method.
+Is called with the initial value of specified property (`undefined` if not set initially) and whenever the value of specified property changes (via `.setProperty()`).
 
 <br>
 

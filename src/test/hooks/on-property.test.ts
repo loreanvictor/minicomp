@@ -19,9 +19,11 @@ describe('onProperty', () => {
 
     expect(el['foo']).toBe('bar')
 
-    expect(cb).toHaveBeenCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(2)
+    expect(cb).toHaveBeenCalledWith(undefined)
     expect(cb).toHaveBeenCalledWith('bar')
 
-    expect(cb2).not.toHaveBeenCalled()
+    expect(cb2).toHaveBeenCalledTimes(1)
+    expect(cb2).toHaveBeenCalledWith(undefined)
   })
 })
