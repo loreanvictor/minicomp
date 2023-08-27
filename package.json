@@ -1,6 +1,6 @@
 {
   "name": "minicomp",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Minimalistic library for creating Web Components",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
@@ -51,7 +51,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "jsdom": "^21.1.0",
     "quel": "^0.3.2",
-    "rehtm": "^0.3.2",
+    "rehtm": "^0.4.0",
     "sleep-promise": "^9.1.0",
     "ts-inference-check": "^0.2.1",
     "ts-jest": "^29.0.3",

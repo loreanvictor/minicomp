@@ -101,8 +101,12 @@ export function component(
     }
 
     override setAttribute(name: string, value: string): void {
-      super.setAttribute(name, value)
-      this._attributeChanged && this._attributeChanged(name, value, this)
+      if (name in this._props) {
+        this.setProperty(name, value)
+      } else {
+        super.setAttribute(name, value)
+        this._attributeChanged && this._attributeChanged(name, value, this)
+      }
     }
 
     override removeAttribute(qualifiedName: string): void {
@@ -111,6 +115,10 @@ export function component(
     }
 
     setProperty(name: string, value: unknown) {
+      if (this.hasAttribute(name)) {
+        this.removeAttribute(name)
+      }
+
       super[name] = value
       this._props[name] = value
       this._propertyChanged && this._propertyChanged(name, value, this)

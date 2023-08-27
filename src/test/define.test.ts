@@ -3,6 +3,7 @@ import './polyfill'
 import { JSDOM } from 'jsdom'
 import { template, html } from 'rehtm'
 import { using, define, definable } from '../define'
+import { PropableElement } from '../component'
 
 
 describe(define, () => {
@@ -102,5 +103,25 @@ describe(define, () => {
     const el = document.querySelector('def-10')!
 
     expect(el.shadowRoot!.innerHTML).toBe('<div>Hellow World!</div>')
+  })
+
+  test('properties overtake attributes.', () => {
+    define('def-11', ({ name }) => `<div>Hellow ${name}!</div>`)
+    const el = document.createElement('def-11') as PropableElement
+    el.setAttribute('name', 'World')
+    el.setProperty('name', 'Universe')
+
+    expect(el.hasAttribute('name')).toBe(false)
+    expect(el['name']).toBe('Universe')
+  })
+
+  test('attributes dont overtake properties.', () => {
+    define('def-12', ({ name }) => `<div>Hellow ${name}!</div>`)
+    const el = document.createElement('def-12') as PropableElement
+    el.setProperty('name', 'Universe')
+    el.setAttribute('name', 'World')
+
+    expect(el.hasAttribute('name')).toBe(false)
+    expect(el['name']).toBe('World')
   })
 })
