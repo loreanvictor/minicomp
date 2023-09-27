@@ -1,6 +1,6 @@
 <div align="right">
 
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/minicomp?color=black&label=&style=flat-square)](https://bundlephobia.com/package/minicomp@latest)
+[![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/minicomp?style=flat-square&label=%20&color=black)](https://bundlejs.com/?q=minicomp)
 ![npm type definitions](https://img.shields.io/npm/types/minicomp?color=black&label=%20&style=flat-square)
 [![version](https://img.shields.io/npm/v/minicomp?label=&color=black&style=flat-square)](https://www.npmjs.com/package/minicomp)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/minicomp/coverage.yml?label=%20&style=flat-square)](https://github.com/loreanvictor/minicomp/actions/workflows/coverage.yml)
