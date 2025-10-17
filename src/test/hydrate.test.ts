@@ -1,6 +1,6 @@
 import { polyfillDSD } from './polyfill'
 
-import { ref, template } from 'rehtm'
+import { ref, template, html } from 'rehtm'
 import { define } from '../define'
 
 
@@ -36,5 +36,15 @@ describe('hydration', () => {
 
     document.body.innerHTML = '<hydrate-2></hydrate-2>'
     expect(document.querySelector('hydrate-2')!.shadowRoot?.serializable).toBe(true)
+  })
+
+  test.only('should not duplicate content when hydratable content not provided.', () => {
+    document.body.innerHTML = '<hydrate-3><template shadowrootmode="open"><div>Hellow!</div></template></hydrate-3>'
+    polyfillDSD(document)
+
+    define('hydrate-3', () => html`<div>Hellow!</div>`)
+
+    const el = document.querySelector('hydrate-3')! as HTMLElement
+    expect(el.shadowRoot?.textContent).toBe('Hellow!')
   })
 })

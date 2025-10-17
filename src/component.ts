@@ -84,8 +84,10 @@ export function component(
           if (typeof node === 'string') {
             this._root.innerHTML = node
           } else if (isSSRTemplate(node)) {
+            this._root.innerHTML = ''
             this._root.appendChild(node.create())
           } else {
+            this._root.innerHTML = ''
             this._root.appendChild(node)
           }
         }
