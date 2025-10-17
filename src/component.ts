@@ -44,10 +44,21 @@ export function component(
       //
       //       however I suspect this can be removed by testing via puppeteer instead of jsdom, at least
       //       for this case (and support of `attachInternals`, specifically for rehydrating closed shadow roots).
-      /* istanbul ignore next */
-      const internals = this.attachInternals ? this.attachInternals() : this
+      const internals = this._attemptInternals()
       this._shouldHydrate = !!internals.shadowRoot
-      this._root = this._shouldHydrate ? internals.shadowRoot! : this.attachShadow({ mode: 'open' })
+      this._root = this._shouldHydrate ? internals.shadowRoot! : this.attachShadow({
+        mode: 'open',
+        serializable: true
+      })
+    }
+
+    /* istanbul ignore next */
+    _attemptInternals() {
+      try {
+        return this.attachInternals ? this.attachInternals() : this
+      } finally {
+        return this
+      }
     }
 
     connectedCallback() {

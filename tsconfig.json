@@ -2,7 +2,7 @@
 	"extends": "./conf/typescript/base.json",
 	"ts-node": {
 		"compilerOptions": {
-			"module": "commonjs"
+			"module": "nodenext"
 		}
 	}
 }

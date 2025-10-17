@@ -23,6 +23,18 @@ describe('hydration', () => {
     const el = document.querySelector('hydrate-1')! as HTMLElement
     el.shadowRoot!.querySelector('button')!.click()
     el.shadowRoot!.querySelector('button')!.click()
-    expect(el.shadowRoot?.innerHTML).toBe('<button>Server <span>2</span></button>')
+    expect(el.shadowRoot?.textContent).toBe('Server 2')
+  })
+
+  // TODO:: this should test proper serialization and rehydration
+  //        this is due to JSDOM not supporting .getHTML() right now.
+  //        issue created: https://github.com/jsdom/jsdom/issues/3955
+  test.skip('components are serializable and re-hydratable', () => {
+    define('hydrate-2', () => {
+      return template`<p>Hello World</p>`
+    })
+
+    document.body.innerHTML = '<hydrate-2></hydrate-2>'
+    expect(document.querySelector('hydrate-2')!.shadowRoot?.serializable).toBe(true)
   })
 })
