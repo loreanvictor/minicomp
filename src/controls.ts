@@ -2,7 +2,7 @@ import { hooksMeta, Meta } from './hooks'
 
 
 export type ControllableMeta = Meta & {
-  controls: { [key: string]: Function }
+  controls: { [key: string]: (...args: unknown[]) => unknown }
 }
 
 

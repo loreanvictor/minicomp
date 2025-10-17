@@ -36,17 +36,10 @@ export function component(
     constructor() {
       super()
 
-      // TODO: this perhaps should be removed?
-      //       this happens because in some environments (e.g. jest + jsdom) the
-      //       `attachInternals` method is not available. this is not merely a testing problem as well,
-      //       as it might happen in SSR environments as well, where rehydration is not an issue but we
-      //       still need to be able to render the component.
-      //
-      //       however I suspect this can be removed by testing via puppeteer instead of jsdom, at least
-      //       for this case (and support of `attachInternals`, specifically for rehydrating closed shadow roots).
       const internals = this._attemptInternals()
-      this._shouldHydrate = !!internals.shadowRoot
-      this._root = this._shouldHydrate ? internals.shadowRoot! : this.attachShadow({
+      const existing = internals.shadowRoot || this.shadowRoot
+      this._shouldHydrate = !!existing
+      this._root = this._shouldHydrate ? existing! : this.attachShadow({
         mode: 'open',
         serializable: true
       })
@@ -56,7 +49,7 @@ export function component(
     _attemptInternals() {
       try {
         return this.attachInternals ? this.attachInternals() : this
-      } finally {
+      } catch {
         return this
       }
     }

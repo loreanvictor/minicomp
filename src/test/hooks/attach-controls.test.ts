@@ -13,7 +13,7 @@ describe(attachControls, () => {
     })
 
     document.body.innerHTML = '<ac-1></ac-1>'
-    const el = document.querySelector('ac-1')! as Controllable<{ cb: Function }>
+    const el = document.querySelector('ac-1')! as Controllable<{ cb: typeof cb }>
     el.controls.cb('Jacko')
 
     expect(cb).toHaveBeenCalledTimes(1)

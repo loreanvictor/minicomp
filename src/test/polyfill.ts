@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
 import { TextEncoder, TextDecoder } from 'util'
