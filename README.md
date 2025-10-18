@@ -10,16 +10,12 @@
 <img src="logo-dark.svg#gh-dark-mode-only" height="56px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="56px"/>
 
-Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) using functions and hooks:
+Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) with one-liner functions:
 
 ```javascript
-import { define, onConnected } from 'minicomp'
+import { define } from 'minicomp'
 
-define('say-hi', ({ to }) => {
-  onConnected(() => console.log('CONNECTED!'))
-
-  return `<div>Hellow <span>${to}</span></div>`
-})
+define('say-hi', ({ to }) => `<div>Hellow <span>${to}</span></div>`)
 ```
 ```html
 <say-hi to="World"></say-hi>
@@ -468,9 +464,32 @@ define('my-timer', () => {
 
 ## Server Side Rendering
 
-[**minicomp**](.) provides support for SSR and isomorphic components (hydrating pre-rendered content in general) via [declarative shadow DOM](https://github.com/mfreed7/declarative-shadow-dom/blob/master/README.md). On [browsers supporting the feature](https://caniuse.com/?search=declarative%20shadow%20dom), server rendered content will be rehydrated. On browsers that don't, it will fallback to client side rendering. You would also need a serializer supporting declarative shadow DOM, such as [Puppeteer](https://developer.chrome.com/docs/puppeteer/ssr/) or [Happy DOM](https://www.npmjs.com/package/happy-dom).
+Components defined with [**minicomp**](.) are [serializable](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/serializable), so they can be rendered on the server and sent to the client:
 
-To enable SSR support on your component, return an `SSRTemplate` object instead of a string or a DOM element. Use libraries such as [**rehtm**](https://github.com/loreanvictor/rehtm#hydration) to easily create SSR templates:
+```js
+import { define } from 'minicomp'
+import { template } from 'rehtm'
+
+define('say-hi', ({ to }) => template`<div>Hellow ${to}</div>`)
+
+// ...
+
+document.body.innerHTML = `<say-hi to="world"></say-hi>`
+console.log(document.body.getHTML({ serializableShadowRoots: true }))
+```
+```
+<say-hi to='world'>
+<template shadowrootmode='open' shadowrootserializable=''>
+<div>Hellow <_>world</_></div>
+</template>
+</say-hi>
+```
+
+[On browsers supporting feature](https://caniuse.com/?search=declarative%20shadow%20dom), the content is displayed as the HTML is received. When the scripts execute and the component is defined, the content is either re-rendered or rehydrated (using existing DOM, only connecting refs and listeners), based on what the component function returns.
+
+On browsers not supporting the feature, the content will be displayed after the scripts execute and the component is defined.
+
+To ensure your component only rehydrates on client, return an `SSRTemplate` object instead of a string or a DOM element. Use libraries such as [**rehtm**](https://github.com/loreanvictor/rehtm#hydration) to easily create SSR templates:
 
 ```js
 import { define } from 'minicomp'
@@ -523,6 +542,11 @@ define('my-comp', () => {
   }
 })
 ```
+
+<br>
+
+> [!NOTE]
+> For server rendering, you need a renderer supporting `getHTML()`, such as [Puppeteer](https://developer.chrome.com/docs/puppeteer/ssr/) or [Happy DOM](https://www.npmjs.com/package/happy-dom).
 
 <br>
 
