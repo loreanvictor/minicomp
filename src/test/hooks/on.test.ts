@@ -8,7 +8,7 @@ describe(on, () => {
   test('provides the proper inference.', () => {
     define('on-1', () => {
       on('click', event => {
-        expect(type(event).is<MouseEvent>(true)).toBe(true)
+        expect(type(event).is<PointerEvent>(true)).toBe(true)
       })
 
       on('keypress', event => {

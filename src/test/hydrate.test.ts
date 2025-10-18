@@ -38,7 +38,7 @@ describe('hydration', () => {
     expect(document.querySelector('hydrate-2')!.shadowRoot?.serializable).toBe(true)
   })
 
-  test.only('should not duplicate content when hydratable content not provided.', () => {
+  test('should not duplicate content when hydratable content not provided.', () => {
     document.body.innerHTML = '<hydrate-3><template shadowrootmode="open"><div>Hellow!</div></template></hydrate-3>'
     polyfillDSD(document)
 

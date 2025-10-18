@@ -335,6 +335,44 @@ Is called when the element is disconnected from the DOM. Might get called multip
 
 <br>
 
+### use
+
+```ts
+use(effect: () => (void | (() => void)))
+```
+
+Run a side effect when the element is connected, and call the returned cleanup (if any) when the element is disconnected.
+
+```ts
+import { define, use } from 'minicomp'
+import { ref, html } from 'rehtm'
+
+define('my-timer', () => {
+  let counter = 0
+  const span = ref()
+  
+  use(() => {
+    const interval = setInterval(() =>
+      span.current.textContent = ++counter, 
+      1000
+    )
+    return () => clearInterval(interval)
+  })
+  
+  return html`
+    <div>
+      Elapsed: <span ref=${span}>0</span> seconds
+    </div>
+  `
+})
+```
+
+<br>
+
+> If the element is disconnected and reconnected, the effect will be re-run.
+
+<br>
+
 ### onAttributeChanged
 
 ```ts

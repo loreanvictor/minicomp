@@ -4,9 +4,8 @@ export * from './hooks'
 export * from './cleanup'
 export * from './attribute'
 export * from './on'
+export * from './use'
 export * from './property'
 export * from './dispatch'
 export * from './ssr-hooks'
 export * from './controls'
-
-
