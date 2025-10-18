@@ -10,12 +10,12 @@
 <img src="logo-dark.svg#gh-dark-mode-only" height="56px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="56px"/>
 
-Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) with one-liner functions:
+Define [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) with ease:
 
 ```javascript
 import { define } from 'minicomp'
 
-define('say-hi', ({ to }) => `<div>Hellow <span>${to}</span></div>`)
+define('say-hi', ({ to }) => `<div>Hellow ${to}</div>`)
 ```
 ```html
 <say-hi to="World"></say-hi>
@@ -23,11 +23,11 @@ define('say-hi', ({ to }) => `<div>Hellow <span>${to}</span></div>`)
 
 <br>
 
-- 🌱 Tiny wrapper over [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
-- 🧁  [Minimalistic components](#usage)
-- ⛓️ [Composable hooks](#custom-hooks)
-- 🧩 Interoperable: create and update your DOM however you want
-- 🧬 [SSR support](#server-side-rendering) with isomorphic components
+Defining Web Components is cumbersome. [**minicomp**](.) is a tiny library to make that easy and delightful. Define components with simple functions and use composable hooks to tap into component lifecycle or dispatch events.
+
+Components defined with [**minicomp**](.) are ready for server-side rendering. They can be serialised to declarative shadow DOM, and can detect existing DOM on client and rehydrate it.
+
+[**minicomp**](.) DOES NOT help with creating DOM or updating it, managing state, etc. It suffices for simple components, combine it with other tools for complex ones. For example, I use it with [**rehtm**](https://github.com/loreanvictor/rehtm/) for creating and updating DOM in more complex components.
 
 <br>
 
@@ -464,7 +464,7 @@ define('my-timer', () => {
 
 ## Server Side Rendering
 
-Components defined with [**minicomp**](.) are [serializable](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/serializable), so they can be rendered on the server and sent to the client:
+Components made with [**minicomp**](.) are [serializable](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/serializable), so they can be rendered on the server and sent to the client:
 
 ```js
 import { define } from 'minicomp'
@@ -485,9 +485,9 @@ console.log(document.body.getHTML({ serializableShadowRoots: true }))
 </say-hi>
 ```
 
-[On browsers supporting feature](https://caniuse.com/?search=declarative%20shadow%20dom), the content is displayed as the HTML is received. When the scripts execute and the component is defined, the content is either re-rendered or rehydrated (using existing DOM, only connecting refs and listeners), based on what the component function returns.
+[On browsers supporting declarative shadow DOM](https://caniuse.com/?search=declarative%20shadow%20dom), the content is displayed as the HTML is received (like other elements). The component code is executed afterwards, and it can either re-render the content, or rehydrate the existing one, only attaching event listeners and connecting refs.
 
-On browsers not supporting the feature, the content will be displayed after the scripts execute and the component is defined.
+On browsers not supporting the feature, components will be rendered fully client-side as usual, after their code is loaded and executed.
 
 To ensure your component only rehydrates on client, return an `SSRTemplate` object instead of a string or a DOM element. Use libraries such as [**rehtm**](https://github.com/loreanvictor/rehtm#hydration) to easily create SSR templates:
 
