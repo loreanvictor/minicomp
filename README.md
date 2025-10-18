@@ -158,6 +158,13 @@ el.setProperty('myProp', { whatever: 'you want' })
 
 The following hooks are commonly used by components:
 
+- [`onAttribute`](#onattribute)
+- [`onProperty`](#onproperty)
+- [`on`](#on)
+- [`useDispatch`](#usedispatch)
+- [`currentNode`](#currentnode)
+- [`attachControls`](#attachcontrols)
+
 <br>
 
 ### onAttribute
@@ -305,6 +312,14 @@ const player = document.querySelector('my-video-player') as Controllable<VideoCo
 
 Use the following hooks to tap into life cycle events of custom elements:
 
+- [`onCleanup`](#oncleanup)
+- [`onConnected`](#onconnected)
+- [`onDisconnected`](#ondisconnected)
+- [`use`](#use)
+- [`onAttributeChanged`](#onattributechanged)
+- [`onPropertyChanged`](#onpropertychanged)
+- [`onRendered`](#onrendered)
+
 <br>
 
 ### onCleanup
@@ -366,6 +381,15 @@ define('my-timer', () => {
   `
 })
 ```
+```html
+<my-timer></my-timer>
+```
+
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/jEWYYqj?editors=1010)
+
+</div>
 
 <br>
 
