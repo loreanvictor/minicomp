@@ -14,12 +14,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-          always-auth: true
       
       - run: npm ci
       - run: npm run coverage
       - run: npm run lint
+      - run: npm run build
       - name: Fix README for NPM
         run: sed -i '/#gh-dark-mode-only/d' README.md
       - uses: JS-DevTools/npm-publish@v4
