@@ -17,6 +17,29 @@ describe('onAttributeChanged', () => {
     expect(cb).toHaveBeenCalledWith('foo', 'bar', el)
   })
 
+  test('it is called when an attribute is toggled.', () => {
+    const cb = jest.fn()
+    define('oac-2-1', () => {
+      onAttributeChanged(cb)
+
+      return '<div>Hi!</div>'
+    })
+
+    const el = document.createElement('oac-2-1')
+    el.setAttribute('foo', 'bar')
+    document.body.appendChild(el)
+    el.toggleAttribute('foo')
+    expect(cb).toHaveBeenCalledWith('foo', ATTRIBUTE_REMOVED, el)
+    el.toggleAttribute('foo')
+    expect(cb).toHaveBeenCalledWith('foo', '', el)
+
+    el.setAttribute('foo', 'bar')
+    cb.mockReset()
+    expect(cb).not.toHaveBeenCalled()
+    el.toggleAttribute('foo', true)
+    expect(cb).toHaveBeenCalledWith('foo', 'bar', el)
+  })
+
   test('is called when an attribute is removed.', () => {
     const cb = jest.fn()
     define('oac-2', () => {

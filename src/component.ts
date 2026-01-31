@@ -115,6 +115,15 @@ export function component(
       }
     }
 
+    override toggleAttribute(name: string, force?: boolean): boolean {
+      const result = super.toggleAttribute(name, force)
+      this._attributeChanged && this._attributeChanged(
+        name, result ? super.getAttribute(name)! : ATTRIBUTE_REMOVED, this
+      )
+
+      return result
+    }
+
     override removeAttribute(qualifiedName: string): void {
       super.removeAttribute(qualifiedName)
       this._attributeChanged && this._attributeChanged(qualifiedName, ATTRIBUTE_REMOVED, this)
