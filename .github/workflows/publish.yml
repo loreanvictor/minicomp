@@ -3,31 +3,22 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  id-token: write
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '22'
       
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Check Coverage
-        run: npm run coverage
-
-      - name: Check Linting
-        run: npm run lint
-
+      - run: npm ci
+      - run: npm run coverage
+      - run: npm run lint
       - name: Fix README for NPM
         run: sed -i '/#gh-dark-mode-only/d' README.md
-      
-      - name: Publish
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+      - uses: JS-DevTools/npm-publish@v4
 
